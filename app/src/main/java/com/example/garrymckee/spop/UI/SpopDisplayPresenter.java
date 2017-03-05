@@ -11,6 +11,8 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import static com.example.garrymckee.spop.Authentication.SpopAuthenticator.Authenticate;
 import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
+import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
+
 /**
  * Created by garrymckee on 05/03/17.
  */
