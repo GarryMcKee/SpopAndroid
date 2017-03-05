@@ -19,13 +19,24 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.android.support:design:25.2.0'
+    compile(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
+    compile 'com.github.spotify:android-auth:9425c6a140'
     testCompile 'junit:junit:4.12'
 }
