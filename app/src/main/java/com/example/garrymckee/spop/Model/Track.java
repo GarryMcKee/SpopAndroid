@@ -16,4 +16,8 @@ public class Track {
     Album album;
     List<Artist> artists;
 
+    public String getName(){
+        return this.name;
+    }
+
 }

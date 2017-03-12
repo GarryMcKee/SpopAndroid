@@ -1,5 +1,7 @@
 package com.example.garrymckee.spop.Authentication;
 
+import android.content.SharedPreferences;
+
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
@@ -11,6 +13,9 @@ public class SpopAuthenticator {
 
     private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
     private static final String REDIRECT_URI = "spop://callback";
+    private static final String TOKEN_KEY = "tokenKey";
+
+    private String authToken;
 
     public static AuthenticationRequest Authenticate(){
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(
@@ -21,14 +26,11 @@ public class SpopAuthenticator {
         return request;
     }
 
-    public String getToken(){
-        if(true){
-            //Get the token from Shared Preferences
+    public void setAuthToken(String authToken){
+        this.authToken = authToken;
+    }
 
-        } else{
-            //Authenticate
-        }
-
-        return "";
+    public String getAuthToken(){
+        return this.authToken;
     }
 }

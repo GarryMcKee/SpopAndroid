@@ -19,17 +19,14 @@ import static android.R.attr.path;
  */
 
 public interface SpotifyAPIService {
-    @GET("recommendations")
-    Call<List<Recommendation>> getRecommendations(
-            @Header("user") String authToken,
-            @Query("seed_artists") String seedArtists,
-            @Query("seed_tracks") String seedTracks,
-            @Query("seed_genres") String seedGenres
-    );
-
-    @GET("recommendations/available-genre-seeds")
-    Call<Genres> getGenreSeeds(@Header("user") String authToken);
-
     @GET("tracks/{id}")
     Call<Track> getTrack(@Path("id") String trackId);
+
+    @GET("me/top/{type}")
+    Call<List<Track>> getTopTracks(
+            @Header("Authorization: Bearer") String authHeader,
+            @Path("type") String type,
+            @Query("time_range") String timeRange
+    );
+
 }

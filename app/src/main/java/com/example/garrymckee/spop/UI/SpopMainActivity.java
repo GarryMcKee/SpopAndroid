@@ -19,6 +19,8 @@ import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
 
+import java.util.List;
+
 import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 public class SpopMainActivity extends AppCompatActivity
@@ -27,6 +29,7 @@ public class SpopMainActivity extends AppCompatActivity
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
 
     private boolean isAuthenticated = false;
+
     private SpopDisplayPresenterInterface presenter;
 
     @Override
@@ -43,7 +46,7 @@ public class SpopMainActivity extends AppCompatActivity
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.fetchTrackById("4VqPOruhp5EdPBeR92t6lQ");
+                presenter.fetchTopTracks();
             }
         });
 
@@ -56,7 +59,7 @@ public class SpopMainActivity extends AppCompatActivity
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
-                Log.d(LOG_TAG, "ACCESS TOKEN:" + response.getAccessToken().toString());
+                presenter.storeAuthToken(response.getAccessToken());
             }
         }
     }
@@ -64,6 +67,17 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void launchAuthenticator(AuthenticationRequest request) {
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    @Override
+    public void displayTopTracks(List<Track> tracks) {
+        String topTracks = "";
+
+        for(Track track : tracks){
+            topTracks += track.getName() + "\n";
+        }
+
+        Log.d(LOG_TAG, topTracks);
     }
 
     @Override

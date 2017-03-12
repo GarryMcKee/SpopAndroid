@@ -9,7 +9,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
 
-import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,26 +24,64 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
 
     private static final String LOG_TAG = SpopDisplayPresenter.class.getSimpleName();
-    private static String SpotifyApiBaseUrl = "https://api.spotify.com/v1/";
-    private SpotifyAPIService spotifyAPIService;
 
+    private static final String SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1/";
+    private static final String SPOTIFY_AUTH_HEADER = "Authorization: Bearer ";
+    private static final String SHORT_TERM_PARAMETER = "short_term";
+
+    private SpotifyAPIService spotifyAPIService;
     private SpopDisplayable spopDisplayable;
+    private SpopAuthenticator spopAuthenticator;
 
     public SpopDisplayPresenter(SpopDisplayable spopDisplayable){
         this.spopDisplayable = spopDisplayable;
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SpotifyApiBaseUrl)
+                .baseUrl(SPOTIFY_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         spotifyAPIService = retrofit.create(SpotifyAPIService.class);
+        spopAuthenticator = new SpopAuthenticator();
     }
 
     @Override
     public void requestAuthentication() {
         AuthenticationRequest authRequest = SpopAuthenticator.Authenticate();
         spopDisplayable.launchAuthenticator(authRequest);
+    }
+
+    @Override
+    public void fetchTopTracks() {
+        Call<List<Track>> call = spotifyAPIService.getTopTracks(
+                spopAuthenticator.getAuthToken(),
+                "track",
+                SHORT_TERM_PARAMETER
+        );
+
+        call.enqueue(new Callback<List<Track>>() {
+            @Override
+            public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
+                if(response.body() == null){
+                    Log.e(LOG_TAG, "Empty list!");
+                    Log.d(LOG_TAG, call.request().url().toString());
+                    Log.d(LOG_TAG, call.request().headers().toString());
+                }
+                spopDisplayable.displayTopTracks(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Track>> call, Throwable t) {
+                Log.e(LOG_TAG, call.request().url().toString());
+                spopDisplayable.displayError(t.getLocalizedMessage());
+            }
+        });
+
+    }
+
+    @Override
+    public void storeAuthToken(String token) {
+        spopAuthenticator.setAuthToken(token);
     }
 
     @Override
