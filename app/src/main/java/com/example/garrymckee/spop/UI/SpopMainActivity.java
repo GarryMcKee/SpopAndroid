@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.garrymckee.spop.Model.Track;
 import com.example.garrymckee.spop.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -21,7 +24,7 @@ import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 public class SpopMainActivity extends AppCompatActivity
         implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
 
-    private static final String LOG_TAG = "SPOP_MAIN_ACTIVITY";
+    private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
 
     private boolean isAuthenticated = false;
     private SpopDisplayPresenterInterface presenter;
@@ -35,6 +38,14 @@ public class SpopMainActivity extends AppCompatActivity
         if(!isAuthenticated){
             presenter.requestAuthentication();
         }
+
+        Button testButton = (Button)findViewById(R.id.button);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.fetchTrackById("28FJMlLUu9NHuwlZWFKDn7");
+            }
+        });
 
     }
 
@@ -53,6 +64,16 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void launchAuthenticator(AuthenticationRequest request) {
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    @Override
+    public void displayTrack(Track track) {
+        Log.e(LOG_TAG, track.getName());
+    }
+
+    @Override
+    public void displayError(String errorMessage) {
+        Log.e(LOG_TAG, errorMessage);
     }
 
     @Override
