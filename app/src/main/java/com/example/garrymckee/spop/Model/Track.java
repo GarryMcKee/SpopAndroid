@@ -1,5 +1,7 @@
 package com.example.garrymckee.spop.Model;
 
+import java.util.List;
+
 /**
  * Created by garrymckee on 12/03/17.
  */
@@ -7,8 +9,11 @@ package com.example.garrymckee.spop.Model;
 public class Track {
 
     String name;
+    String id;
+    String uri;
+    boolean isPlayable;
 
-    public String getName(){
-            return this.name;
-    }
+    Album album;
+    List<Artist> artists;
+
 }
