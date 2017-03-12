@@ -27,19 +27,17 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
     private static String SpotifyApiBaseUrl = "https://api.spotify.com/v1/";
     private SpotifyAPIService spotifyAPIService;
 
-    public SpopDisplayPresenter(){
+    private SpopDisplayable spopDisplayable;
+
+    public SpopDisplayPresenter(SpopDisplayable spopDisplayable){
+        this.spopDisplayable = spopDisplayable;
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SpotifyApiBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         spotifyAPIService = retrofit.create(SpotifyAPIService.class);
-    }
-
-    private SpopDisplayable spopDisplayable;
-
-    public SpopDisplayPresenter(SpopDisplayable spopDisplayable){
-        this.spopDisplayable = spopDisplayable;
     }
 
     @Override
@@ -51,11 +49,16 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
     @Override
     public void fetchTrackById(String trackId) {
 
-            Call<Track> trackCall = spotifyAPIService.getTrack("28FJMlLUu9NHuwlZWFKDn7");
+            final Call<Track> trackCall = spotifyAPIService.getTrack("28FJMlLUu9NHuwlZWFKDn7");
             trackCall.enqueue(new Callback<Track>() {
                 @Override
                 public void onResponse(Call<Track> call, Response<Track> response) {
-                    spopDisplayable.displayTrack(response.body());
+                    Log.d(LOG_TAG, call.request().url().toString());
+                    if(response.body()!=null){
+                        spopDisplayable.displayTrack(response.body());
+                    } else {
+                        spopDisplayable.displayError("Track was null");
+                    }
                 }
 
                 @Override

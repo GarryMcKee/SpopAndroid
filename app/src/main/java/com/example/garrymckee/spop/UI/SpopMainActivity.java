@@ -43,7 +43,7 @@ public class SpopMainActivity extends AppCompatActivity
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.fetchTrackById("28FJMlLUu9NHuwlZWFKDn7");
+                presenter.fetchTrackById("4VqPOruhp5EdPBeR92t6lQ");
             }
         });
 
@@ -68,7 +68,7 @@ public class SpopMainActivity extends AppCompatActivity
 
     @Override
     public void displayTrack(Track track) {
-        Log.e(LOG_TAG, track.getName());
+        Log.d(LOG_TAG, track.getName());
     }
 
     @Override

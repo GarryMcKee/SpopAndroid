@@ -12,6 +12,8 @@ import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import static android.R.attr.path;
+
 /**
  * Created by garrymckee on 12/03/17.
  */
@@ -28,6 +30,6 @@ public interface SpotifyAPIService {
     @GET("recommendations/available-genre-seeds")
     Call<Genres> getGenreSeeds(@Header("user") String authToken);
 
-    @GET("tracks")
+    @GET("tracks/{id}")
     Call<Track> getTrack(@Path("id") String trackId);
 }
