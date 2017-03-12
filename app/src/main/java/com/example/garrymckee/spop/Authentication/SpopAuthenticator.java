@@ -1,12 +1,7 @@
 package com.example.garrymckee.spop.Authentication;
 
-import android.app.Activity;
-
-import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
-
-import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 /**
  * Created by garrymckee on 05/03/17.
@@ -24,5 +19,16 @@ public class SpopAuthenticator {
         builder.setScopes(new String[]{"user-read-private", "streaming"});
         AuthenticationRequest request = builder.build();
         return request;
+    }
+
+    public String getToken(){
+        if(true){
+            //Get the token from Shared Preferences
+
+        } else{
+            //Authenticate
+        }
+
+        return "";
     }
 }

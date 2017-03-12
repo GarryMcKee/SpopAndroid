@@ -9,7 +9,6 @@ import com.example.garrymckee.spop.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
-import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
 import com.spotify.sdk.android.player.PlayerEvent;
@@ -22,7 +21,6 @@ import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 public class SpopMainActivity extends AppCompatActivity
         implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
 
-    private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
     private static final String LOG_TAG = "SPOP_MAIN_ACTIVITY";
 
     private boolean isAuthenticated = false;
@@ -37,6 +35,7 @@ public class SpopMainActivity extends AppCompatActivity
         if(!isAuthenticated){
             presenter.requestAuthentication();
         }
+
     }
 
     @Override
