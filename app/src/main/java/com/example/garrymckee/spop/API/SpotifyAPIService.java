@@ -1,7 +1,5 @@
 package com.example.garrymckee.spop.API;
 
-import com.example.garrymckee.spop.Model.Genres;
-import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.Track;
 
 import java.util.List;
@@ -24,9 +22,8 @@ public interface SpotifyAPIService {
 
     @GET("me/top/{type}")
     Call<List<Track>> getTopTracks(
-            @Header("Authorization: Bearer") String authHeader,
-            @Path("type") String type,
-            @Query("time_range") String timeRange
+            @Header("Authorization") String authHeader,
+            @Path("type") String type
     );
 
 }

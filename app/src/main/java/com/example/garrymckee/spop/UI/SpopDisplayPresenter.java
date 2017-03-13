@@ -9,6 +9,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,26 +54,22 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
 
     @Override
     public void fetchTopTracks() {
+        Log.d(LOG_TAG, "Attempting fetchTopTracks()");
+        Log.d(LOG_TAG, "Token is: " + spopAuthenticator.getAuthToken());
         Call<List<Track>> call = spotifyAPIService.getTopTracks(
-                spopAuthenticator.getAuthToken(),
-                "track",
-                SHORT_TERM_PARAMETER
+                "Bearer " + spopAuthenticator.getAuthToken(),
+                "tracks"
         );
 
         call.enqueue(new Callback<List<Track>>() {
             @Override
             public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
-                if(response.body() == null){
-                    Log.e(LOG_TAG, "Empty list!");
-                    Log.d(LOG_TAG, call.request().url().toString());
-                    Log.d(LOG_TAG, call.request().headers().toString());
-                }
-                spopDisplayable.displayTopTracks(response.body());
+                Log.d(LOG_TAG, "RESPONSE: " + response.toString());
             }
 
             @Override
             public void onFailure(Call<List<Track>> call, Throwable t) {
-                Log.e(LOG_TAG, call.request().url().toString());
+                Log.e(LOG_TAG, "fetchTopTracks() Failure!");
                 spopDisplayable.displayError(t.getLocalizedMessage());
             }
         });
