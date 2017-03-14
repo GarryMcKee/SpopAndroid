@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.API.SpotifyAPIService;
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
+import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
@@ -85,6 +86,7 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
             public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
                 if(response.body() != null){
                     Log.d(LOG_TAG, "RESPONSE:" + "\n" + response.body().toString());
+
                 } else{
                     Log.d(LOG_TAG, "RESPONSE IS EMPTY");
                 }
@@ -96,8 +98,27 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
                 spopDisplayable.displayError(t.getMessage());
             }
         });
+    }
 
+    @Override
+    public void fetchReccomendations() {
+        Call<Recommendation> call = spotifyAPIService.getReccomendations(
+                "Bearer " + spopAuthenticator.getAuthToken(),
+                "0XNa1vTidXlvJ2gHSsRi4A",
+                "0ancVQ9wEcHVd0RrGICTE4"
+        );
 
+        call.enqueue(new Callback<Recommendation>() {
+            @Override
+            public void onResponse(Call<Recommendation> call, Response<Recommendation> response) {
+                Log.d(LOG_TAG, response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Recommendation> call, Throwable t) {
+                spopDisplayable.displayError(t.getMessage());
+            }
+        });
     }
 
     @Override
