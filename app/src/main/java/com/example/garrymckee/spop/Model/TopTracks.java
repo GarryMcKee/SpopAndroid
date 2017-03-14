@@ -6,7 +6,7 @@ import java.util.List;
  * Created by garrymckee on 14/03/17.
  */
 
-public class PagingObject {
+public class TopTracks {
 
     List<Track> items;
 

@@ -4,14 +4,12 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.API.SpotifyAPIService;
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
-import com.example.garrymckee.spop.Model.PagingObject;
+import com.example.garrymckee.spop.Model.TopArtists;
+import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
-
-import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,15 +52,37 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
     }
 
     @Override
-    public void fetchTopTracks() {
-        Call<PagingObject> call = spotifyAPIService.getTopTracks(
-                "Bearer " + spopAuthenticator.getAuthToken(),
-                "tracks"
+    public void fetchTopArtists() {
+        Call<TopArtists> call = spotifyAPIService.getTopArtists(
+                "Bearer " + spopAuthenticator.getAuthToken()
         );
 
-        call.enqueue(new Callback<PagingObject>() {
+        call.enqueue(new Callback<TopArtists>() {
             @Override
-            public void onResponse(Call<PagingObject> call, Response<PagingObject> response) {
+            public void onResponse(Call<TopArtists> call, Response<TopArtists> response) {
+                if(response.body() != null){
+                    Log.d(LOG_TAG, "RESPONSE:" + "\n" + response.body().toString());
+                } else{
+                    Log.d(LOG_TAG, "RESPONSE IS EMPTY");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopArtists> call, Throwable t) {
+                spopDisplayable.displayError(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void fetchTopTracks() {
+        Call<TopTracks> call = spotifyAPIService.getTopTracks(
+                "Bearer " + spopAuthenticator.getAuthToken()
+        );
+
+        call.enqueue(new Callback<TopTracks>() {
+            @Override
+            public void onResponse(Call<TopTracks> call, Response<TopTracks> response) {
                 if(response.body() != null){
                     Log.d(LOG_TAG, "RESPONSE:" + "\n" + response.body().toString());
                 } else{
@@ -72,7 +92,7 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
             }
 
             @Override
-            public void onFailure(Call<PagingObject> call, Throwable t) {
+            public void onFailure(Call<TopTracks> call, Throwable t) {
                 spopDisplayable.displayError(t.getMessage());
             }
         });

@@ -14,6 +14,7 @@ public interface SpopDisplayContract {
     interface SpopDisplayPresenterInterface {
         void requestAuthentication();
         void fetchTrackById(String trackId);
+        void fetchTopArtists();
         void fetchTopTracks();
         void storeAuthToken(String token);
     }

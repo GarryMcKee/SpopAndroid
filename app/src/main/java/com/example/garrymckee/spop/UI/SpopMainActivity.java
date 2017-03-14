@@ -46,7 +46,7 @@ public class SpopMainActivity extends AppCompatActivity
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.fetchTopTracks();
+                presenter.fetchTopArtists();
             }
         });
 
