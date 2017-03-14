@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.API.SpotifyAPIService;
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
+import com.example.garrymckee.spop.Model.PagingObject;
 import com.example.garrymckee.spop.Model.Track;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
@@ -54,25 +55,28 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
 
     @Override
     public void fetchTopTracks() {
-        Log.d(LOG_TAG, "Attempting fetchTopTracks()");
-        Log.d(LOG_TAG, "Token is: " + spopAuthenticator.getAuthToken());
-        Call<List<Track>> call = spotifyAPIService.getTopTracks(
+        Call<PagingObject> call = spotifyAPIService.getTopTracks(
                 "Bearer " + spopAuthenticator.getAuthToken(),
                 "tracks"
         );
 
-        call.enqueue(new Callback<List<Track>>() {
+        call.enqueue(new Callback<PagingObject>() {
             @Override
-            public void onResponse(Call<List<Track>> call, Response<List<Track>> response) {
-                Log.d(LOG_TAG, "RESPONSE: " + response.toString());
+            public void onResponse(Call<PagingObject> call, Response<PagingObject> response) {
+                if(response.body() != null){
+                    Log.d(LOG_TAG, "RESPONSE:" + "\n" + response.body().toString());
+                } else{
+                    Log.d(LOG_TAG, "RESPONSE IS EMPTY");
+                }
+
             }
 
             @Override
-            public void onFailure(Call<List<Track>> call, Throwable t) {
-                Log.e(LOG_TAG, "fetchTopTracks() Failure!");
-                spopDisplayable.displayError(t.getLocalizedMessage());
+            public void onFailure(Call<PagingObject> call, Throwable t) {
+                spopDisplayable.displayError(t.getMessage());
             }
         });
+
 
     }
 

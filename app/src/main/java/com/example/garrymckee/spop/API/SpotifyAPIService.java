@@ -1,5 +1,6 @@
 package com.example.garrymckee.spop.API;
 
+import com.example.garrymckee.spop.Model.PagingObject;
 import com.example.garrymckee.spop.Model.Track;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface SpotifyAPIService {
     Call<Track> getTrack(@Path("id") String trackId);
 
     @GET("me/top/{type}")
-    Call<List<Track>> getTopTracks(
+    Call<PagingObject> getTopTracks(
             @Header("Authorization") String authHeader,
             @Path("type") String type
     );
