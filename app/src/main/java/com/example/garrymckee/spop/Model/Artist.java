@@ -9,6 +9,7 @@ public class Artist {
     private String id;
     private String name;
     private String uri;
+    String[] genres;
 
     public String getId() {
         return id;
@@ -20,5 +21,9 @@ public class Artist {
 
     public String getUri() {
         return uri;
+    }
+
+    public String[] getGenres() {
+        return genres;
     }
 }

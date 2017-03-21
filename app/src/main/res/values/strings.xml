@@ -3,6 +3,10 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="generate_user_profile_button">Generate User Taste Profile</string>
+    <string name="print_user_taste_button_text">Print User Taste Profile</string>
+
     <string name="title_activity_spotify_authenticate">SpotifyAuthenticateActivity</string>
     <string name="title_activity_spop">SpopActivity</string>
 </resources>

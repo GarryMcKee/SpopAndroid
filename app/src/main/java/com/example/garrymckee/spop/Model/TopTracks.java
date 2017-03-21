@@ -10,6 +10,10 @@ public class TopTracks {
 
     List<Track> items;
 
+    public List<Track> getTracks() {
+        return items;
+    }
+
     @Override
     public String toString() {
         String result = "";

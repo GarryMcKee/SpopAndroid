@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
-import com.example.garrymckee.spop.Model.Track;
 import com.example.garrymckee.spop.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -18,8 +16,6 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
-
-import java.util.List;
 
 import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
@@ -42,13 +38,11 @@ public class SpopMainActivity extends AppCompatActivity
             presenter.requestAuthentication();
         }
 
-        Button testButton = (Button)findViewById(R.id.button);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.fetchReccomendations();
-            }
-        });
+        Button generateUserTasteButton = (Button)findViewById(R.id.generate_user_taste_profile_button);
+        Button printUserTasteButton = (Button)findViewById(R.id.print_user_taste_profile_button);
+
+        generateUserTasteButton.setOnClickListener( v -> presenter.generateUserTasteProfile());
+        printUserTasteButton.setOnClickListener(v -> presenter.printUserTasteProfile());
 
     }
 
@@ -67,27 +61,6 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void launchAuthenticator(AuthenticationRequest request) {
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
-    }
-
-    @Override
-    public void displayTopTracks(List<Track> tracks) {
-        String topTracks = "";
-
-        for(Track track : tracks){
-            topTracks += track.getName() + "\n";
-        }
-
-        Log.d(LOG_TAG, topTracks);
-    }
-
-    @Override
-    public void displayTrack(Track track) {
-        Log.d(LOG_TAG, track.getName());
-    }
-
-    @Override
-    public void displayError(String errorMessage) {
-        Log.e(LOG_TAG, errorMessage);
     }
 
     @Override

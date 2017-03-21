@@ -2,11 +2,13 @@ package com.example.garrymckee.spop.Model;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 /**
  * Created by garrymckee on 12/03/17.
  */
 
-public class Track {
+public class Track{
 
     String name;
     String id;
@@ -19,5 +21,9 @@ public class Track {
     public String getName(){
         return this.name;
     }
+    public String getArtist() {
+        return artists.get(0).getName();
+    }
+
 
 }

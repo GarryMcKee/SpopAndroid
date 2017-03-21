@@ -5,6 +5,7 @@ import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -17,20 +18,21 @@ import retrofit2.http.Query;
 
 public interface SpotifyAPIService {
     @GET("tracks/{id}")
-    Call<Track> getTrack(@Path("id") String trackId);
+    Observable<Track> getTrack(@Path("id") String trackId);
+
+    @GET("tracks/{id}")
+    Observable<Track> getRxTrack(@Path("id") String trackId);
 
     @GET("me/top/artists")
-    Call<TopArtists> getTopArtists(
-            @Header("Authorization") String authHeader
-    );
+    Observable<TopArtists> getTopArtists(
+            @Header("Authorization") String authHeader);
 
     @GET("me/top/tracks")
-    Call<TopTracks> getTopTracks(
-            @Header("Authorization") String authHeader
-    );
+    Observable<TopTracks> getTopTracks(
+            @Header("Authorization") String authHeader);
 
     @GET("recommendations")
-    Call<Recommendation> getReccomendations(
+    Observable<Recommendation> getReccomendations(
             @Header("Authorization") String authHeader,
             @Query("seed_artists") String seedArtists,
             @Query("seed_tracks") String seedTracks

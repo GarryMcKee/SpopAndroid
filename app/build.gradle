@@ -10,7 +10,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        jackOptions {
+            enabled true
+        }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -37,8 +47,13 @@ dependencies {
     //noinspection GradleCompatible
     compile 'com.android.support:support-v4:25.2.0'
     compile 'com.android.support:design:25.2.0'
+
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
     compile(name: 'spotify-player-24-noconnect-2.20b', ext: 'aar')
     compile 'com.github.spotify:android-auth:9425c6a140'
     testCompile 'junit:junit:4.12'

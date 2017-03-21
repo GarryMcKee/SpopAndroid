@@ -10,6 +10,10 @@ public class TopArtists {
 
     List<Artist> items;
 
+    public List<Artist> getArtists() {
+        return items;
+    }
+
     @Override
     public String toString() {
         String result = "";
