@@ -32,10 +32,12 @@ public interface SpotifyAPIService {
             @Header("Authorization") String authHeader);
 
     @GET("recommendations")
-    Observable<Recommendation> getReccomendations(
+    Observable<Recommendation> getRecommendations(
             @Header("Authorization") String authHeader,
             @Query("seed_artists") String seedArtists,
-            @Query("seed_tracks") String seedTracks
+            @Query("seed_tracks") String seedTracks,
+            @Query("seed_genres") String seedGenres,
+            @Query("limit") String limit
     );
 
 }

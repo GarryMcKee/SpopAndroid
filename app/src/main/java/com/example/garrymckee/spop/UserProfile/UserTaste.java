@@ -6,25 +6,20 @@ import com.example.garrymckee.spop.API.SpotifyAPIService;
 import com.example.garrymckee.spop.API.SpotifyApiUtils;
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Model.Artist;
-import com.example.garrymckee.spop.Model.Genres;
 import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
+import com.example.garrymckee.spop.UI.SpopDisplayPresenter;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by garrymckee on 15/03/17.
@@ -41,11 +36,14 @@ public class UserTaste {
     private boolean topArtistsReady;
     private boolean topGenresReady;
 
+    private SpopDisplayPresenter presenter;
+
     final Observable<TopTracks> topTracksCall;
     final Observable<TopArtists> topArtistsCall;
 
-    public UserTaste() {
+    public UserTaste(SpopDisplayPresenter presenter) {
         topGenres = new HashSet<>();
+        this.presenter = presenter;
 
         SpotifyAPIService spotifyApiService = SpotifyApiUtils.getSpotifyApiServiceInstance();
         SpopAuthenticator spopAuthenticator = SpopAuthenticator.getInstance();
@@ -54,10 +52,6 @@ public class UserTaste {
         topArtistsCall = spotifyApiService.getTopArtists(authHeader);
 
         initialiseUserTaste();
-    }
-
-    public boolean isUserTasteProfileReady(){
-        return topTracksReady && topArtistsReady && topGenresReady;
     }
 
     private void initialiseUserTaste() {
@@ -132,10 +126,10 @@ public class UserTaste {
 
     private void initialiseTopGenres(){
 
-        if (!topArtists.isEmpty()) {
-            for (Artist artist : topArtists) {
+        if (!getTopArtists().isEmpty()) {
+            for (Artist artist : getTopArtists()) {
                 for (String genre : artist.getGenres()){
-                    topGenres.add(genre);
+                    getTopGenres().add(genre);
                 }
             }
 
@@ -158,31 +152,43 @@ public class UserTaste {
     }
 
     private void onUserTasteReady(){
-        printUserTaste();
+        presenter.onUserProfileReady();
     }
 
     public String printUserTaste() {
         String userTasteString = "USER TASTE:" + "\n";
         userTasteString += "Top Tracks: " + "\n";
 
-        for (Track track : topTracks) {
+        for (Track track : getTopTracks()) {
             userTasteString += track.getName() + " by " + track.getArtist() + "\n";
         }
 
         userTasteString += "Top Artists:" + "\n";
 
-        for (Artist artist : topArtists) {
+        for (Artist artist : getTopArtists()) {
             userTasteString += artist.getName() + "\n";
         }
 
         userTasteString += "Top Genres:" + "\n";
 
-        for (String genre : topGenres) {
+        for (String genre : getTopGenres()) {
             userTasteString += genre + "\n";
         }
 
         Log.d(LOG_TAG, userTasteString);
 
         return userTasteString;
+    }
+
+    public List<Track> getTopTracks() {
+        return topTracks;
+    }
+
+    public List<Artist> getTopArtists() {
+        return topArtists;
+    }
+
+    public Set<String> getTopGenres() {
+        return topGenres;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.garrymckee.spop.UI;
 
+import com.example.garrymckee.spop.Model.Recommendation;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
 /**
@@ -12,12 +13,15 @@ public interface SpopDisplayContract {
         void requestAuthentication();
         void storeAuthToken(String token);
         void generateUserTasteProfile();
-        void printUserTasteProfile();
+        void onUserProfileReady();
+        void fetchRecommendations();
+        void init();
     }
 
     interface SpopDisplayable {
 
         void launchAuthenticator(AuthenticationRequest request);
+        void displayRecommendations(Recommendation recommendation);
 
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -23,9 +24,6 @@ public class SpopMainActivity extends AppCompatActivity
         implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
 
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
-
-    private boolean isAuthenticated = false;
-
     private SpopDisplayPresenterInterface presenter;
 
     @Override
@@ -33,16 +31,7 @@ public class SpopMainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spop_main);
         presenter = new SpopDisplayPresenter(this);
-
-        if(!isAuthenticated){
-            presenter.requestAuthentication();
-        }
-
-        Button generateUserTasteButton = (Button)findViewById(R.id.generate_user_taste_profile_button);
-        Button printUserTasteButton = (Button)findViewById(R.id.print_user_taste_profile_button);
-
-        generateUserTasteButton.setOnClickListener( v -> presenter.generateUserTasteProfile());
-        printUserTasteButton.setOnClickListener(v -> presenter.printUserTasteProfile());
+        presenter.requestAuthentication();
 
     }
 
@@ -54,6 +43,8 @@ public class SpopMainActivity extends AppCompatActivity
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 presenter.storeAuthToken(response.getAccessToken());
+                presenter.init();
+                Log.d(LOG_TAG, "CALLED INIT()");
             }
         }
     }
@@ -61,6 +52,11 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void launchAuthenticator(AuthenticationRequest request) {
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+    }
+
+    @Override
+    public void displayRecommendations(Recommendation recommendation) {
+        Log.d(LOG_TAG, recommendation.toString());
     }
 
     @Override
