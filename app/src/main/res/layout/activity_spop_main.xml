@@ -1,19 +1,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context="com.example.garrymckee.spop.UI.SpopMainActivity">
+    tools:context="com.example.garrymckee.spop.UI.SpopMainActivity"
+    android:weightSum="1">
 
-    <Button
-        android:id="@+id/generate_user_taste_profile_button"
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_weight="0.08"
+        android:background="@color/colorAccent">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/generate_user_profile_button" />
+        android:layout_weight="0.08"
+        android:gravity="center"
+        android:text="I Feel You"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/print_user_taste_profile_button"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:gravity="center"
+        android:text="Depeche Mode"
+        android:textColor="@android:color/background_light" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/print_user_taste_button_text"/>
+        android:layout_weight="0.08"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/btn_star" />
+    </LinearLayout>
+
 </LinearLayout>

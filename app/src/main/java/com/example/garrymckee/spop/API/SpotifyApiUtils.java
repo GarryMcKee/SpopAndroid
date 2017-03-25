@@ -1,6 +1,10 @@
 package com.example.garrymckee.spop.API;
 
+import com.example.garrymckee.spop.Model.Track;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,5 +23,14 @@ public class SpotifyApiUtils {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit.create(SpotifyAPIService.class);
+    }
+
+    public static List<String> getImageUrlsFromTracks(List<Track> tracks) {
+        ArrayList<String> imageUrls = new ArrayList<>();
+        for (Track track: tracks) {
+            imageUrls.add(track.getAlbum().getImages().get(0).getUrl());
+        }
+
+        return imageUrls;
     }
 }

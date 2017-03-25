@@ -21,9 +21,14 @@ public class Track{
     public String getName(){
         return this.name;
     }
-    public String getId() {return this.id;}
+    public String getId() {
+        return this.id;
+    }
     public String getArtist() {
         return artists.get(0).getName();
+    }
+    public Album getAlbum() {
+        return this.album;
     }
 
 
