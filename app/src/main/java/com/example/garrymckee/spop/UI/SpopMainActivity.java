@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
-import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.R;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -43,8 +41,7 @@ public class SpopMainActivity extends AppCompatActivity
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 presenter.storeAuthToken(response.getAccessToken());
-                presenter.init();
-                Log.d(LOG_TAG, "CALLED INIT()");
+                presenter.fetchRecommendations();
             }
         }
     }
@@ -55,8 +52,8 @@ public class SpopMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayRecommendations(Recommendation recommendation) {
-        Log.d(LOG_TAG, recommendation.toString());
+    public void displayRecommendations(String recommendation) {
+        Log.d(LOG_TAG, recommendation);
     }
 
     @Override
