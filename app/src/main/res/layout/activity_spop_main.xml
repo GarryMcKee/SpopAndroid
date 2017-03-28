@@ -3,17 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    tools:context="com.example.garrymckee.spop.UI.SpopMainActivity"
-    android:weightSum="1">
+    android:background="@color/spotify_black"
+    tools:context="com.example.garrymckee.spop.UI.SpopMainActivity">
 
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_weight="0.08"
-        android:background="@color/colorAccent">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/cover_art_padding">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/cover_art_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true" />
 
     </FrameLayout>
 
@@ -21,22 +26,21 @@
         android:id="@+id/track_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.08"
         android:gravity="center"
-        android:text="I Feel You"
-        android:textColor="@android:color/background_light"
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/text_default"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/artist_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.08"
         android:gravity="center"
-        android:text="Depeche Mode"
-        android:textColor="@android:color/background_light" />
+        android:textSize="@dimen/text_normal"
+        android:textColor="@color/text_default" />
 
     <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
@@ -44,11 +48,22 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/save_track_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <ImageButton
+            android:id="@+id/play_pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
             android:id="@+id/next_recommendation_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/btn_star" />
+            app:srcCompat="@android:drawable/" />
     </LinearLayout>
 
 </LinearLayout>

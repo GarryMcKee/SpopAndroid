@@ -18,12 +18,13 @@ public interface SpopDisplayContract {
         void storeAuthToken(String token);
         void onRecommendationsReady(List<TrackRecommendation> recommendations);
         void fetchRecommendations();
+        void getNextRecommendation();
     }
 
     interface SpopDisplayable {
 
         void launchAuthenticator(AuthenticationRequest request);
-        void displayRecommendations(String recommendation);
+        void displayRecommendations(TrackRecommendation recommendation);
 
     }
 }

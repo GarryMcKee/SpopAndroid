@@ -1,6 +1,7 @@
 package com.example.garrymckee.spop.UI;
 
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
+import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
 import com.example.garrymckee.spop.Recommendation.RecommendationManager;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -17,9 +18,12 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
 
     private SpopDisplayable spopDisplayable;
     private SpopAuthenticator spopAuthenticator;
+    private int recommendationIndex;
+    private List<TrackRecommendation> recommendations;
 
     public SpopDisplayPresenter(SpopDisplayable spopDisplayable){
         this.spopDisplayable = spopDisplayable;
+        this. recommendationIndex = 0;
         spopAuthenticator = SpopAuthenticator.getInstance();
 
     }
@@ -42,10 +46,15 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
     }
 
     @Override
+    public void getNextRecommendation() {
+        recommendationIndex++;
+        spopDisplayable.displayRecommendations(recommendations.get(recommendationIndex));
+    }
+
+    @Override
     public void onRecommendationsReady(List<TrackRecommendation> recommendations) {
-        for (TrackRecommendation recommendation : recommendations) {
-            spopDisplayable.displayRecommendations(recommendation.toString());
-        }
+        this.recommendations = recommendations;
+        spopDisplayable.displayRecommendations(this.recommendations.get(recommendationIndex));
     }
 
 }

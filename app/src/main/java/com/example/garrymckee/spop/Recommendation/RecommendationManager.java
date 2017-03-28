@@ -73,7 +73,6 @@ public class RecommendationManager {
                     }
                     presenter.onRecommendationsReady(trackRecommendations);
                 });
-
     }
 
     private RecommendationInput createRecommendationInput(List<Artist> artists, List<Track> tracks) {
@@ -97,19 +96,15 @@ public class RecommendationManager {
 
     private Set<String> getGenresFromArtists(List<Artist> artists) {
         Set<String> genres = new HashSet<>();
-
         if (!artists.isEmpty()) {
-
             for (Artist artist : artists) {
                 for (String genre : artist.getGenres()) {
                     genres.add(genre);
                 }
             }
-
             return genres;
         } else {
             return null;
         }
     }
-
 }

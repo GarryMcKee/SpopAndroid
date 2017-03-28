@@ -4,8 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.example.garrymckee.spop.Model.TrackRecommendation;
 import com.example.garrymckee.spop.R;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -22,14 +27,27 @@ public class SpopMainActivity extends AppCompatActivity
         implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
 
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
+
     private SpopDisplayPresenterInterface presenter;
+
+    private TextView trackNameLabel;
+    private TextView artistNameLabel;
+    private SimpleDraweeView coverArtImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_spop_main);
         presenter = new SpopDisplayPresenter(this);
         presenter.requestAuthentication();
+
+        trackNameLabel = (TextView) findViewById(R.id.track_name_label);
+        artistNameLabel = (TextView) findViewById(R.id.artist_name_label);
+        coverArtImage = (SimpleDraweeView) findViewById(R.id.cover_art_image);
+
+        ImageButton nextRecommendationButton = (ImageButton) findViewById(R.id.next_recommendation_button);
+        nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
 
     }
 
@@ -52,8 +70,11 @@ public class SpopMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayRecommendations(String recommendation) {
-        Log.d(LOG_TAG, recommendation);
+    public void displayRecommendations(TrackRecommendation recommendation) {
+        Log.d(LOG_TAG, recommendation.toString());
+        coverArtImage.setImageURI(recommendation.getImageUrl());
+        trackNameLabel.setText(recommendation.getTrackName());
+        artistNameLabel.setText(recommendation.getArtistName());
     }
 
     @Override
