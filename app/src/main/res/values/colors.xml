@@ -7,6 +7,8 @@
     <color name="black_overlay">#000000</color>
 
     <color name="spotify_black">#191414</color>
+    <color name="spop_light_grey">#999999</color>
+    <color name="spop_mid_grey">#666666</color>
     <color name="spotify_green">#1DB954</color>
 
     <color name="text_default">#FFFFFF</color>

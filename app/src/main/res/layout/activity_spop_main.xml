@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +11,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/cover_art_padding">
+        android:padding="@dimen/cover_art_padding"
+        android:layout_alignParentTop="true"
+        android:id="@+id/cover_art_container">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/cover_art_image"
@@ -29,7 +31,8 @@
         android:gravity="center"
         android:textSize="@dimen/text_normal"
         android:textColor="@color/text_default"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@+id/cover_art_container"/>
 
     <TextView
         android:id="@+id/artist_name_label"
@@ -37,33 +40,45 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="@dimen/text_normal"
-        android:textColor="@color/text_default" />
+        android:textColor="@color/text_default"
+        android:layout_below="@id/track_name_label"/>
 
     <LinearLayout
         android:id="@+id/action_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.08"
+        android:layout_weight="0"
+        android:background="@color/spop_mid_grey"
         android:gravity="bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/action_bar_padding"
+        android:paddingRight="@dimen/action_bar_padding"
+        android:layout_alignParentBottom="true">
 
         <ImageButton
             android:id="@+id/save_track_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_star_border_white_48dp"
+            android:tint="@color/spotify_green" />
 
         <ImageButton
             android:id="@+id/play_pause_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_play_circle_outline_black_48dp"
+            android:tint="@color/spotify_green" />
 
         <ImageButton
             android:id="@+id/next_recommendation_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@android:drawable/" />
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_forward_white_48dp"
+            android:tint="@color/spotify_green" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
