@@ -4,25 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/spotify_black"
+    android:background="@color/background_default"
     tools:context="com.example.garrymckee.spop.UI.SpopMainActivity">
 
 
-    <FrameLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/cover_art_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/cover_art_padding"
+        android:layout_margin="@dimen/cover_art_padding"
         android:layout_alignParentTop="true"
-        android:id="@+id/cover_art_container">
+        app:cardElevation="@dimen/cover_art_elevation"
+        >
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/cover_art_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="true"
+            android:translationZ="5dp"/>
 
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/track_name_label"
@@ -48,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:background="@color/spop_mid_grey"
+        android:background="@color/spotify_black"
         android:gravity="bottom"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/action_bar_padding"

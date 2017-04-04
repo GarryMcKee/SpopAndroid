@@ -66,6 +66,7 @@ public class SpopMainActivity extends AppCompatActivity
 
     @Override
     public void launchAuthenticator(AuthenticationRequest request) {
+        Log.d(LOG_TAG, "Launching Authenticator");
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
