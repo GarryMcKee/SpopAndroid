@@ -6,5 +6,5 @@
     <dimen name="cover_art_padding">15dp</dimen>
     <dimen name="text_normal">16sp</dimen>
     <dimen name="action_bar_padding">15dp</dimen>
-    <dimen name="cover_art_elevation">20dp</dimen>
+    <dimen name="cover_art_elevation">50dp</dimen>
 </resources>
