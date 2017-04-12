@@ -10,20 +10,23 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cover_art_container"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/cover_art_padding"
+        android:layout_margin="@dimen/cover_art_margin"
+        app:cardBackgroundColor="@color/spop_white"
+        app:contentPadding="@dimen/cover_art_padding"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         app:cardElevation="@dimen/cover_art_elevation"
         >
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/cover_art_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/cover_art_width"
+            android:layout_height="@dimen/cover_art_height"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
-            android:translationZ="5dp"/>
+            />
 
     </android.support.v7.widget.CardView>
 
@@ -50,7 +53,6 @@
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
         android:orientation="horizontal"
@@ -70,21 +72,21 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/play_pause_button"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="@dimen/default_button_padding"
             android:background="@drawable/button_selector"
-            android:src="@drawable/ic_play_circle_outline_black_48dp"
+            android:src="@drawable/play_icon"
             android:tint="@color/icon_tint" />
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <ImageButton

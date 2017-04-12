@@ -1,0 +1,26 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Padding and Margin values -->
+    <dimen name="cover_art_margin">15dp</dimen>
+    <dimen name="cover_art_padding">5dp</dimen>
+    <dimen name="action_bar_padding">30dp</dimen>
+    <dimen name="default_button_padding">14dp</dimen>
+    <dimen name="pressed_button_padding">2dp</dimen>
+
+    <!-- Text Values -->
+    <dimen name="text_normal">16sp</dimen>
+
+    <!-- Elevation Values -->
+    <dimen name="cover_art_elevation">8dp</dimen>
+
+    <!--UI element size values -->
+    <dimen name="cover_art_width">300dp</dimen>
+    <dimen name="cover_art_height">300dp</dimen>
+
+    <dimen name="play_button_size">50dp</dimen>
+    <dimen name="default_button_size">30dp</dimen>
+
+</resources>
