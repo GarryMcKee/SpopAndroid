@@ -5,6 +5,10 @@
 
     <dimen name="cover_art_padding">15dp</dimen>
     <dimen name="text_normal">16sp</dimen>
-    <dimen name="action_bar_padding">15dp</dimen>
+    <dimen name="action_bar_padding">30dp</dimen>
     <dimen name="cover_art_elevation">50dp</dimen>
+    <dimen name="play_button_size">50dp</dimen>
+    <dimen name="default_button_size">30dp</dimen>
+    <dimen name="default_button_padding">8dp</dimen>
+    <dimen name="pressed_button_padding">2dp</dimen>
 </resources>

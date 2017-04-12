@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#ff4081</color>
+    <color name="colorAccent">@color/spotify_green</color>
 
     <!-- App Colours !-->
     <color name="spotify_black">#191414</color>
     <color name="spop_light_grey">#999999</color>
+    <color name="spop_white">#FFFFFF</color>
     <color name="spop_mid_grey">#666666</color>
     <color name="spotify_green">#1DB954</color>
 
@@ -16,5 +18,7 @@
     <!-- UI Element Colours!-->
     <color name="background_default">#444444</color>
     <color name="icon_tint">@color/spotify_black</color>
-    <color name="action_bar_background">@color/spotify_green</color>
+    <color name="action_bar_background">#000000</color>
+
+
 </resources>

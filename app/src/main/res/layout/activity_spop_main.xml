@@ -46,50 +46,55 @@
         android:textColor="@color/text_default"
         android:layout_below="@id/track_name_label"/>
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:layout_alignParentBottom="true"
-        app:cardElevation="@dimen/cover_art_elevation">
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/action_bar_padding"
+        android:paddingRight="@dimen/action_bar_padding"
+        android:paddingTop="@dimen/action_bar_padding"
+        android:paddingBottom="@dimen/action_bar_padding">
 
-        <LinearLayout
-            android:id="@+id/action_bar"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/save_track_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:background="@color/action_bar_background"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/action_bar_padding"
-            android:paddingRight="@dimen/action_bar_padding"
-            >
+            android:padding="@dimen/default_button_padding"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/ic_star_border_white_48dp"
+            android:tint="@color/icon_tint" />
 
-            <ImageButton
-                android:id="@+id/save_track_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_star_border_white_48dp"
-                android:tint="@color/icon_tint" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/play_pause_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_play_circle_outline_black_48dp"
-                android:tint="@color/icon_tint" />
+        <ImageButton
+            android:id="@+id/play_pause_button"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:padding="@dimen/default_button_padding"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/ic_play_circle_outline_black_48dp"
+            android:tint="@color/icon_tint" />
 
-            <ImageButton
-                android:id="@+id/next_recommendation_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_arrow_forward_white_48dp"
-                android:tint="@color/icon_tint" />
-        </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    </android.support.v7.widget.CardView>
+        <ImageButton
+            android:id="@+id/next_recommendation_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_button_padding"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/ic_arrow_forward_white_48dp"
+            android:tint="@color/icon_tint" />
+    </LinearLayout>
 
 </RelativeLayout>

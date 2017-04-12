@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
+import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
@@ -48,6 +50,9 @@ public class SpopMainActivity extends AppCompatActivity
 
         ImageButton nextRecommendationButton = (ImageButton) findViewById(R.id.next_recommendation_button);
         nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
+
+        ImageButton playButton = (ImageButton) findViewById(R.id.play_pause_button);
+        //Play current spotify id
 
     }
 
