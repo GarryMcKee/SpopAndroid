@@ -9,10 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
+import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
 import com.example.garrymckee.spop.R;
+import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -43,7 +44,13 @@ public class SpopMainActivity extends AppCompatActivity
         Fresco.initialize(this);
         setContentView(R.layout.activity_spop_main);
 
-        presenter.requestAuthentication();
+        if(SpopAuthenticator.getInstance().getAuthToken() == null) {
+            Log.d(LOG_TAG, "Not authenticated");
+            presenter.requestAuthentication();
+        } else {
+            setupUI();
+        }
+
     }
 
     @Override
@@ -75,22 +82,24 @@ public class SpopMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayRecommendations(TrackRecommendation recommendation) {
-        Log.d(LOG_TAG, recommendation.toString());
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    public void onRecommendationsReady() {
+        setupUI();
+    }
 
+    private void setupUI() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
         //Set up view pager
         trackViewPager = (ViewPager) findViewById(R.id.trackview_viewpager);
         trackViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
-                TrackRecommendation recommendation = presenter.getRecommendations().get(position);
+                TrackRecommendation recommendation = RecommendationHolder.getInstance().getRecommendations().get(position);
                 return TrackViewFragment.newInstance(recommendation);
             }
 
             @Override
             public int getCount() {
-                return presenter.getRecommendations().size();
+                return RecommendationHolder.getInstance().getRecommendations().size();
             }
         });
 
@@ -99,7 +108,6 @@ public class SpopMainActivity extends AppCompatActivity
                 .beginTransaction()
                 .add(R.id.transport_container, new TransportFragment())
                 .commit();
-
     }
 
     @Override

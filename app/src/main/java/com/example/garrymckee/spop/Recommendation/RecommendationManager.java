@@ -72,7 +72,8 @@ public class RecommendationManager {
                         TrackRecommendation trackRecommendation = new TrackRecommendation(track, imageUrl);
                         trackRecommendations.add(index, trackRecommendation);
                     }
-                    presenter.onRecommendationsReady(trackRecommendations);
+                    RecommendationHolder.getInstance().setRecommendations(trackRecommendations);
+                    presenter.onRecommendationsReady();
                 });
     }
 
