@@ -1,11 +1,10 @@
 package com.example.garrymckee.spop.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,10 +15,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
-import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
-import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
@@ -32,16 +29,14 @@ public class SpopMainActivity extends AppCompatActivity
         implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
 
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
-    private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
 
-    private SpopDisplayPresenterInterface presenter;
+
+    private SpopDisplayPresentable presenter;
 
     private TextView trackNameLabel;
     private TextView artistNameLabel;
     private SimpleDraweeView coverArtImage;
     private String currentTrackUri;
-
-    private Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +54,7 @@ public class SpopMainActivity extends AppCompatActivity
         nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
 
         ImageButton playButton = (ImageButton) findViewById(R.id.play_pause_button);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "Current track URI: " + currentTrackUri);
-
-                try{
-                    String spotifyURI = "spotify:track:" + currentTrackUri;
-                    player.playUri(null, spotifyURI, 0, 0);
-                } catch (Exception e) {
-                    Log.e(LOG_TAG, e.getMessage());
-                }
-
-            }
-        });
-
+        playButton.setOnClickListener(v -> presenter.playTrackFromUri(currentTrackUri));
     }
 
     @Override
@@ -90,26 +71,11 @@ public class SpopMainActivity extends AppCompatActivity
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
 
 
-            //Instantiate the player
-            Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
-            Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
-                @Override
-                public void onInitialized(SpotifyPlayer spotifyPlayer) {
-                    player = spotifyPlayer;
-                    player.addConnectionStateCallback(SpopMainActivity.this);
-                    player.addNotificationCallback(SpopMainActivity.this);
-                }
-
-                @Override
-                public void onError(Throwable throwable) {
-                    Log.e(LOG_TAG, "Could not initialise player");
-                }
-            });
-
-            //Fetch recommendations
+            //Initialise player and fetch recommendations
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 presenter.storeAuthToken(response.getAccessToken());
                 presenter.fetchRecommendations();
+                presenter.initialisePlayer(getApplicationContext(), response.getAccessToken());
             }
         }
     }
@@ -127,6 +93,11 @@ public class SpopMainActivity extends AppCompatActivity
         trackNameLabel.setText(recommendation.getTrackName());
         artistNameLabel.setText(recommendation.getArtistName());
         currentTrackUri = recommendation.getId();
+    }
+
+    @Override
+    public Context getApplicationContext() {
+        return super.getApplicationContext();
     }
 
     @Override

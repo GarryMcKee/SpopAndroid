@@ -10,6 +10,7 @@ import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
+import com.example.garrymckee.spop.UI.SpopDisplayContract;
 import com.example.garrymckee.spop.UI.SpopDisplayPresenter;
 
 import java.util.ArrayList;
@@ -29,9 +30,9 @@ import io.reactivex.schedulers.Schedulers;
 public class RecommendationManager {
     private static final String RECOMMENDATIONS_POOL_LIMIT = "100";
 
-    private final SpopDisplayPresenter presenter;
+    private final SpopDisplayContract.SpopDisplayPresentable presenter;
 
-    public RecommendationManager(SpopDisplayPresenter presenter) {
+    public RecommendationManager(SpopDisplayContract.SpopDisplayPresentable presenter) {
         this.presenter = presenter;
     }
 

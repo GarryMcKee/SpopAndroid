@@ -1,12 +1,16 @@
 package com.example.garrymckee.spop.UI;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
-import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
+import com.example.garrymckee.spop.Playback.SpotifyPlayerWrapper;
 import com.example.garrymckee.spop.Recommendation.RecommendationManager;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
 import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
+import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.util.List;
 
@@ -14,10 +18,11 @@ import java.util.List;
  * Created by garrymckee on 05/03/17.
  */
 
-public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
+public class SpopDisplayPresenter implements SpopDisplayPresentable {
 
     private SpopDisplayable spopDisplayable;
     private SpopAuthenticator spopAuthenticator;
+    private SpotifyPlayerWrapper player;
     private int recommendationIndex;
     private List<TrackRecommendation> recommendations;
 
@@ -57,4 +62,14 @@ public class SpopDisplayPresenter implements SpopDisplayPresenterInterface{
         spopDisplayable.displayRecommendations(this.recommendations.get(recommendationIndex));
     }
 
+    @Override
+    public void initialisePlayer(Context ctx, String authToken) {
+        player = new SpotifyPlayerWrapper(ctx, authToken);
+    }
+
+    @Override
+    public void playTrackFromUri(String spotifyUri) {
+        Log.d("PRESENTER", "playing track");
+        player.playTrackFromUri(spotifyUri);
+    }
 }
