@@ -3,6 +3,7 @@ package com.example.garrymckee.spop.Playback;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
@@ -19,12 +20,12 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
     private static final String LOG_TAG = SpotifyPlayerWrapper.class.getSimpleName();
     private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
 
-    private SpotifyPlayer player;
+    private static SpotifyPlayer player;
 
-    public SpotifyPlayerWrapper(Context ctx, String authToken) {
+    public SpotifyPlayerWrapper(Context ctx) {
 
         //Instantiate the player
-        Config playerConfig = new Config(ctx, authToken, CLIENT_ID);
+        Config playerConfig = new Config(ctx, SpopAuthenticator.getInstance().getAuthToken(), CLIENT_ID);
         Spotify.getPlayer(playerConfig, this, new com.spotify.sdk.android.player.SpotifyPlayer.InitializationObserver() {
             @Override
             public void onInitialized(com.spotify.sdk.android.player.SpotifyPlayer spotifyPlayer) {

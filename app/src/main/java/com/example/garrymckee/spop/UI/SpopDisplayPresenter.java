@@ -51,6 +51,11 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
     }
 
     @Override
+    public List<TrackRecommendation> getRecommendations() {
+        return recommendations;
+    }
+
+    @Override
     public void getNextRecommendation() {
         recommendationIndex++;
         spopDisplayable.displayRecommendations(recommendations.get(recommendationIndex));
@@ -64,7 +69,7 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
 
     @Override
     public void initialisePlayer(Context ctx, String authToken) {
-        player = new SpotifyPlayerWrapper(ctx, authToken);
+        //player = new SpotifyPlayerWrapper(ctx, authToken);
     }
 
     @Override

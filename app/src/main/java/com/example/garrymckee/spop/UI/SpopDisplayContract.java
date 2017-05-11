@@ -20,6 +20,7 @@ public interface SpopDisplayContract {
         void storeAuthToken(String token);
         void onRecommendationsReady(List<TrackRecommendation> recommendations);
         void fetchRecommendations();
+        List<TrackRecommendation> getRecommendations();
         void getNextRecommendation();
         void initialisePlayer(Context ctx, String authToken);
         void playTrackFromUri(String spotifyUri);
@@ -30,6 +31,15 @@ public interface SpopDisplayContract {
         void launchAuthenticator(AuthenticationRequest request);
         void displayRecommendations(TrackRecommendation recommendation);
         Context getApplicationContext();
+
+    }
+
+    interface TransportPresenter {
+        void getNextRecommendation();
+        void playTrackFromUri(String spotifyUri);
+    }
+
+    interface TransportDisplayable {
 
     }
 }

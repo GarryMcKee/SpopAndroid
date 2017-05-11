@@ -2,16 +2,18 @@ package com.example.garrymckee.spop.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.example.garrymckee.spop.Model.TrackRecommendation;
 import com.example.garrymckee.spop.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
@@ -32,29 +34,16 @@ public class SpopMainActivity extends AppCompatActivity
 
 
     private SpopDisplayPresentable presenter;
-
-    private TextView trackNameLabel;
-    private TextView artistNameLabel;
-    private SimpleDraweeView coverArtImage;
-    private String currentTrackUri;
+    private ViewPager trackViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new SpopDisplayPresenter(this);
         Fresco.initialize(this);
         setContentView(R.layout.activity_spop_main);
-        presenter = new SpopDisplayPresenter(this);
+
         presenter.requestAuthentication();
-
-        trackNameLabel = (TextView) findViewById(R.id.track_name_label);
-        artistNameLabel = (TextView) findViewById(R.id.artist_name_label);
-        coverArtImage = (SimpleDraweeView) findViewById(R.id.cover_art_image);
-
-        ImageButton nextRecommendationButton = (ImageButton) findViewById(R.id.next_recommendation_button);
-        nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
-
-        ImageButton playButton = (ImageButton) findViewById(R.id.play_pause_button);
-        playButton.setOnClickListener(v -> presenter.playTrackFromUri(currentTrackUri));
     }
 
     @Override
@@ -75,7 +64,6 @@ public class SpopMainActivity extends AppCompatActivity
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 presenter.storeAuthToken(response.getAccessToken());
                 presenter.fetchRecommendations();
-                presenter.initialisePlayer(getApplicationContext(), response.getAccessToken());
             }
         }
     }
@@ -89,10 +77,29 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void displayRecommendations(TrackRecommendation recommendation) {
         Log.d(LOG_TAG, recommendation.toString());
-        coverArtImage.setImageURI(recommendation.getImageUrl());
-        trackNameLabel.setText(recommendation.getTrackName());
-        artistNameLabel.setText(recommendation.getArtistName());
-        currentTrackUri = recommendation.getId();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        //Set up view pager
+        trackViewPager = (ViewPager) findViewById(R.id.trackview_viewpager);
+        trackViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+            @Override
+            public Fragment getItem(int position) {
+                TrackRecommendation recommendation = presenter.getRecommendations().get(position);
+                return TrackViewFragment.newInstance(recommendation);
+            }
+
+            @Override
+            public int getCount() {
+                return presenter.getRecommendations().size();
+            }
+        });
+
+        //Set up transport fragment
+        fragmentManager
+                .beginTransaction()
+                .add(R.id.transport_container, new TransportFragment())
+                .commit();
+
     }
 
     @Override
