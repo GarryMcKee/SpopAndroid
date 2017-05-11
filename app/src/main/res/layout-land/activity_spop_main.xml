@@ -1,115 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background_default"
-    tools:context="com.example.garrymckee.spop.UI.SpopMainActivity">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cover_art_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_margin="@dimen/cover_art_margin"
-        app:cardBackgroundColor="@color/spop_white"
-        app:contentPadding="@dimen/cover_art_padding"
-        app:cardElevation="@dimen/cover_art_elevation">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/cover_art_image"
-            android:layout_width="@dimen/cover_art_height"
-            android:layout_height="@dimen/cover_art_width"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:translationZ="5dp" />
-
-    </android.support.v7.widget.CardView>
-
-    <RelativeLayout
-        android:id="@+id/track_info_container"
+    <FrameLayout
+        android:id="@+id/transport_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/cover_art_container">
-
-        <TextView
-            android:id="@+id/track_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Pink Floyd"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_normal"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/artist_name_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/track_name_label"
-            android:text="Time"
-            android:textColor="@color/text_default"
-            android:textSize="@dimen/text_normal" />
-
-    </RelativeLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/action_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/action_bar_padding"
-        android:paddingRight="@dimen/action_bar_padding"
-        android:paddingTop="@dimen/action_bar_padding"
-        android:paddingBottom="@dimen/action_bar_padding"
+        android:layout_alignParentEnd="true"
         >
+    </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/save_track_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/default_button_padding"
-            android:background="@drawable/button_selector"
-            android:src="@drawable/ic_star_border_white_48dp"
-            android:tint="@color/icon_tint" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/play_pause_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/default_button_padding"
-            android:background="@drawable/button_selector"
-            android:src="@drawable/play_icon"
-            android:tint="@color/icon_tint" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/next_recommendation_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:padding="@dimen/default_button_padding"
-            android:background="@drawable/button_selector"
-            android:src="@drawable/ic_arrow_forward_white_48dp"
-            android:tint="@color/icon_tint" />
-    </LinearLayout>
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/trackview_viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/transport_container">
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>
+
+
