@@ -7,6 +7,7 @@ import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Error;
+import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
@@ -15,10 +16,11 @@ import com.spotify.sdk.android.player.SpotifyPlayer;
  * Created by Garry on 17/04/2017.
  */
 
-public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.SpotifyPlayer.NotificationCallback,ConnectionStateCallback {
+public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.SpotifyPlayer.NotificationCallback,ConnectionStateCallback, Player.OperationCallback {
 
     private static final String LOG_TAG = SpotifyPlayerWrapper.class.getSimpleName();
     private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
+    private static final String SPOTIFY_URI_PREFIX = "spotify:track:";
 
     private static SpotifyPlayer player;
 
@@ -42,8 +44,9 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
     }
 
     public void playTrackFromUri(String spotifyUri) {
-        if (player!=null) {
-            player.playUri(null, spotifyUri, 0 , 0);
+        if (player != null) {
+            Log.d(LOG_TAG, "URI: " + spotifyUri);
+            player.playUri(this, SPOTIFY_URI_PREFIX + spotifyUri, 0 , 0);
         } else {
             Log.e(LOG_TAG, "player has not been initialised");
         }
@@ -82,5 +85,15 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
     @Override
     public void onPlaybackError(Error error) {
         Log.d(LOG_TAG, "PLAYBACK ERROR: " + error.toString());
+    }
+
+    @Override
+    public void onSuccess() {
+        Log.d(LOG_TAG, "Playback sucess!");
+    }
+
+    @Override
+    public void onError(Error error) {
+
     }
 }
