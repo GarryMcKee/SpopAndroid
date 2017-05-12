@@ -1,9 +1,6 @@
 package com.example.garrymckee.spop.UI;
 
-import android.content.Context;
 import android.util.Log;
-
-import com.example.garrymckee.spop.Playback.SpotifyPlayerWrapper;
 
 /**
  * Created by Garry on 11/05/2017.

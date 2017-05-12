@@ -17,11 +17,9 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
 
     private SpopDisplayable spopDisplayable;
     private SpopAuthenticator spopAuthenticator;
-    private int recommendationIndex;
 
     public SpopDisplayPresenter(SpopDisplayable spopDisplayable){
         this.spopDisplayable = spopDisplayable;
-        this. recommendationIndex = 0;
         spopAuthenticator = SpopAuthenticator.getInstance();
 
     }
