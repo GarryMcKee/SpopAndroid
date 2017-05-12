@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
+import com.example.garrymckee.spop.Playback.CurrentTrack;
 import com.example.garrymckee.spop.R;
 import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -100,6 +101,31 @@ public class SpopMainActivity extends AppCompatActivity
             @Override
             public int getCount() {
                 return RecommendationHolder.getInstance().getRecommendations().size();
+            }
+        });
+
+        trackViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                String currentTrackUri = RecommendationHolder
+                        .getInstance()
+                        .getRecommendations()
+                        .get(position)
+                        .getId();
+
+                CurrentTrack
+                        .getInstance()
+                        .setCurrentTrackUri(currentTrackUri);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
 

@@ -22,7 +22,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new TransportPresenter();
+        presenter = new TransportPresenter(getActivity());
     }
 
     @Nullable
