@@ -129,6 +129,16 @@ public class SpopMainActivity extends AppCompatActivity
             }
         });
 
+        String currentTrackUri = RecommendationHolder
+                .getInstance()
+                .getRecommendations()
+                .get(trackViewPager.getCurrentItem())
+                .getId();
+
+        CurrentTrack
+                .getInstance()
+                .setCurrentTrackUri(currentTrackUri);
+
         //Set up transport fragment
         fragmentManager
                 .beginTransaction()
