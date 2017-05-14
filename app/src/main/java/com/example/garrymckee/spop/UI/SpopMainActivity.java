@@ -84,6 +84,7 @@ public class SpopMainActivity extends AppCompatActivity
 
     @Override
     public void onRecommendationsReady() {
+        //Once model layer is ready display data
         setupUI();
     }
 
@@ -112,15 +113,7 @@ public class SpopMainActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-                String currentTrackUri = RecommendationHolder
-                        .getInstance()
-                        .getRecommendations()
-                        .get(position)
-                        .getId();
-
-                CurrentTrack
-                        .getInstance()
-                        .setCurrentTrackUri(currentTrackUri);
+                presenter.setCurrentTrackUri(position);
             }
 
             @Override
@@ -129,15 +122,7 @@ public class SpopMainActivity extends AppCompatActivity
             }
         });
 
-        String currentTrackUri = RecommendationHolder
-                .getInstance()
-                .getRecommendations()
-                .get(trackViewPager.getCurrentItem())
-                .getId();
-
-        CurrentTrack
-                .getInstance()
-                .setCurrentTrackUri(currentTrackUri);
+        presenter.setCurrentTrackUri(trackViewPager.getCurrentItem());
 
         //Set up transport fragment
         fragmentManager

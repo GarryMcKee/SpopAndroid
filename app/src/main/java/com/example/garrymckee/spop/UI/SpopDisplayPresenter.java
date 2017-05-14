@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
+import com.example.garrymckee.spop.Playback.CurrentTrack;
+import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.example.garrymckee.spop.Recommendation.RecommendationManager;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 
@@ -47,12 +49,15 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
     }
 
     @Override
-    public void initialisePlayer(Context ctx, String authToken) {
-        //player = new SpotifyPlayerWrapper(ctx, authToken);
-    }
+    public void setCurrentTrackUri(int trackPosition) {
+        String currentTrackUri = RecommendationHolder
+                .getInstance()
+                .getRecommendations()
+                .get(trackPosition)
+                .getId();
 
-    @Override
-    public void playTrackFromUri(String spotifyUri) {
-        Log.d("PRESENTER", "playing track");
+        CurrentTrack
+                .getInstance()
+                .setCurrentTrackUri(currentTrackUri);
     }
 }

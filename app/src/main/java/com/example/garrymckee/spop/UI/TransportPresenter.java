@@ -14,8 +14,10 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
     private static final String LOG_TAG = TransportPresenter.class.getSimpleName();
     private SpotifyPlayerWrapper playerWrapper;
+    private SpopDisplayContract.TransportDisplayable transportDisplayable;
 
-    public TransportPresenter(Context ctx) {
+    public TransportPresenter(SpopDisplayContract.TransportDisplayable transportDisplayable, Context ctx) {
+        this.transportDisplayable = transportDisplayable;
         playerWrapper = new SpotifyPlayerWrapper(ctx);
     }
 
@@ -27,5 +29,20 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
     @Override
     public void playTrackFromUri(String spotifyUri) {
         playerWrapper.playTrackFromUri(CurrentTrack.getInstance().getCurrentTrackUri());
+    }
+
+    @Override
+    public void pauseCurrentTrack() {
+        playerWrapper.pauseTrack();
+    }
+
+    @Override
+    public void onPlay() {
+        transportDisplayable.setPlaying();
+    }
+
+    @Override
+    public void onPause() {
+        transportDisplayable.setPaused();
     }
 }

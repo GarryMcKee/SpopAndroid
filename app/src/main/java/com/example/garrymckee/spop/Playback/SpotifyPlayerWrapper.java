@@ -45,12 +45,16 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
 
     public void playTrackFromUri(String spotifyUri) {
         if (player != null) {
-            Log.d(LOG_TAG, "URI: " + spotifyUri);
             player.playUri(this, SPOTIFY_URI_PREFIX + spotifyUri, 0 , 0);
         } else {
             Log.e(LOG_TAG, "player has not been initialised");
         }
     }
+
+    public void pauseTrack() {
+        player.pause(this);
+    }
+
 
     @Override
     public void onLoggedIn() {
@@ -79,7 +83,7 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
 
     @Override
     public void onPlaybackEvent(PlayerEvent playerEvent) {
-
+        playerEvent.
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.garrymckee.spop.Model.Image;
 import com.example.garrymckee.spop.R;
 
 /**
@@ -16,13 +17,17 @@ import com.example.garrymckee.spop.R;
 
 public class TransportFragment extends Fragment implements SpopDisplayContract.TransportDisplayable{
 
-    TransportPresenter presenter;
-    String currentTrackUri;
+    private TransportPresenter presenter;
+    private String currentTrackUri;
+    private boolean currentTrackPlaying;
+
+    private ImageButton nextRecommendationButton;
+    private ImageButton playButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new TransportPresenter(getActivity());
+        presenter = new TransportPresenter(this, getActivity());
     }
 
     @Nullable
@@ -30,12 +35,28 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transport, container, false);
 
-        ImageButton nextRecommendationButton = (ImageButton) view.findViewById(R.id.next_recommendation_button);
+        nextRecommendationButton = (ImageButton) view.findViewById(R.id.next_recommendation_button);
         nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
 
-        ImageButton playButton = (ImageButton) view.findViewById(R.id.play_pause_button);
-        playButton.setOnClickListener(v -> presenter.playTrackFromUri(currentTrackUri));
+        playButton = (ImageButton) view.findViewById(R.id.play_pause_button);
+        playButton.setOnClickListener(v -> {
+            if(currentTrackPlaying) {
+                presenter.playTrackFromUri(currentTrackUri);
+            } else {
+                presenter.pauseTrack();
+            }
+        });
 
         return view;
+    }
+
+    @Override
+    public void setPlaying() {
+        playButton.setImageResource(R.drawable.ic_pause_black_48dp);
+    }
+
+    @Override
+    public void setPaused() {
+        playButton.setImageResource(R.drawable.play_icon);
     }
 }
