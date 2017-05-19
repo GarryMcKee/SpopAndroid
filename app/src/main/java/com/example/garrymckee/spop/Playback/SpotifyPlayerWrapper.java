@@ -46,7 +46,17 @@ public class SpotifyPlayerWrapper implements ConnectionStateCallback, Player.Ope
 
     public void playTrackFromUri(String spotifyUri) {
         if (player != null) {
-            player.playUri(this, SPOTIFY_URI_PREFIX + spotifyUri, 0 , 0);
+
+            if(player.getPlaybackState().positionMs > 0 && player.getMetadata().currentTrack.uri.equals(SPOTIFY_URI_PREFIX + spotifyUri)){
+                if (player.getPlaybackState().isPlaying) {
+                    player.pause(this);
+                } else {
+                    player.resume(this);
+                }
+            } else {
+                player.playUri(this, SPOTIFY_URI_PREFIX + spotifyUri, 0 , 0);
+            }
+
         } else {
             Log.e(LOG_TAG, "player has not been initialised");
         }
@@ -61,7 +71,11 @@ public class SpotifyPlayerWrapper implements ConnectionStateCallback, Player.Ope
     }
 
     public boolean isPlaying() {
-        return player.getPlaybackState().isPlaying;
+        if(player.getPlaybackState().positionMs > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
