@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Playback.CurrentTrack;
+import com.example.garrymckee.spop.Playback.SpotifyPlayerWrapper;
 import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.example.garrymckee.spop.Recommendation.RecommendationManager;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -59,5 +60,10 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
         CurrentTrack
                 .getInstance()
                 .setCurrentTrackUri(currentTrackUri);
+    }
+
+    @Override
+    public void onTrackSelected(String trackUri) {
+
     }
 }

@@ -21,6 +21,7 @@ public interface SpopDisplayContract {
         void onRecommendationsReady();
         void fetchRecommendations();
         void setCurrentTrackUri(int trackPosition);
+        void onTrackSelected(String trackUri);
     }
 
     interface SpopDisplayable {

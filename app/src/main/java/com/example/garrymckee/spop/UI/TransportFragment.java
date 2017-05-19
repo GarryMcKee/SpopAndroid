@@ -19,11 +19,13 @@ import com.example.garrymckee.spop.R;
 public class TransportFragment extends Fragment implements SpopDisplayContract.TransportDisplayable{
 
     private TransportPresenter presenter;
-    private String currentTrackUri;
-    private boolean currentTrackPlaying;
 
     private ImageButton nextRecommendationButton;
     private ImageButton playButton;
+
+    public TransportPresenter getPresenter() {
+        return presenter;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

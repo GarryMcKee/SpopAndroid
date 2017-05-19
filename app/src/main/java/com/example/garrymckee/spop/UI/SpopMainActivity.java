@@ -114,6 +114,8 @@ public class SpopMainActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
                 presenter.setCurrentTrackUri(position);
+                ((TransportFragment)getSupportFragmentManager().findFragmentById(R.id.transport_container))
+                        .getPresenter().playTrackFromUri(RecommendationHolder.getInstance().getRecommendations().get(position).getId());
             }
 
             @Override
