@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.garrymckee.spop.Model.Image;
+import com.example.garrymckee.spop.Playback.CurrentTrack;
 import com.example.garrymckee.spop.R;
 
 /**
@@ -40,11 +41,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
 
         playButton = (ImageButton) view.findViewById(R.id.play_pause_button);
         playButton.setOnClickListener(v -> {
-            if(currentTrackPlaying) {
-                presenter.playTrackFromUri(currentTrackUri);
-            } else {
-                presenter.pauseTrack();
-            }
+            presenter.playTrackFromUri(CurrentTrack.getInstance().getCurrentTrackUri());
         });
 
         return view;

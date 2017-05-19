@@ -83,7 +83,6 @@ public class SpotifyPlayerWrapper implements com.spotify.sdk.android.player.Spot
 
     @Override
     public void onPlaybackEvent(PlayerEvent playerEvent) {
-        playerEvent.
     }
 
     @Override
