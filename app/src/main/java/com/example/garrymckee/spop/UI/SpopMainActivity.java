@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
-import com.example.garrymckee.spop.Playback.CurrentTrack;
 import com.example.garrymckee.spop.R;
 import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -34,13 +33,19 @@ public class SpopMainActivity extends AppCompatActivity
 
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
 
+    private static final String KEY_VIEWPAGER_POSITION = "view_pager_position";
+
 
     private SpopDisplayPresentable presenter;
     private ViewPager trackViewPager;
+    private int lastViewPagerPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null) {
+            lastViewPagerPosition = savedInstanceState.getInt(KEY_VIEWPAGER_POSITION);
+        }
         presenter = new SpopDisplayPresenter(this);
         Fresco.initialize(this);
         setContentView(R.layout.activity_spop_main);
@@ -52,6 +57,12 @@ public class SpopMainActivity extends AppCompatActivity
             setupUI();
         }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_VIEWPAGER_POSITION, lastViewPagerPosition);
     }
 
     @Override
@@ -92,6 +103,7 @@ public class SpopMainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         //Set up view pager
         trackViewPager = (ViewPager) findViewById(R.id.trackview_viewpager);
+
         trackViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
@@ -113,9 +125,20 @@ public class SpopMainActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
+                //TODO This entire function is a bit hacky
                 presenter.setCurrentTrackUri(position);
-                ((TransportFragment)getSupportFragmentManager().findFragmentById(R.id.transport_container))
-                        .getPresenter().playTrackFromUri(RecommendationHolder.getInstance().getRecommendations().get(position).getId());
+
+                //This should only really be called on rotation changes, don't replay the song if onPageSelected was called without acctually changing the track
+                if(position != lastViewPagerPosition) {
+                    ((TransportFragment)getSupportFragmentManager().findFragmentById(R.id.transport_container))
+                            .getPresenter()
+                            .playTrackFromUri(RecommendationHolder.getInstance().getRecommendations().get(position).getId());
+                } else {
+                    Log.d(LOG_TAG, "Called on Page Selected without changing selected item");
+                }
+
+                lastViewPagerPosition = position;
+
             }
 
             @Override
