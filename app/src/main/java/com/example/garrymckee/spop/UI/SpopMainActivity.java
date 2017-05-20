@@ -29,7 +29,7 @@ import com.example.garrymckee.spop.UI.SpopDisplayContract.*;
 import static com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE;
 
 public class SpopMainActivity extends AppCompatActivity
-        implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable{
+        implements SpotifyPlayer.NotificationCallback,ConnectionStateCallback, SpopDisplayable, OnNextTrackListener {
 
     private static final String LOG_TAG = SpopMainActivity.class.getSimpleName();
 
@@ -47,6 +47,7 @@ public class SpopMainActivity extends AppCompatActivity
             lastViewPagerPosition = savedInstanceState.getInt(KEY_VIEWPAGER_POSITION);
         }
         presenter = new SpopDisplayPresenter(this);
+        //TODO initialise Fresco in an Application class
         Fresco.initialize(this);
         setContentView(R.layout.activity_spop_main);
 
@@ -150,9 +151,12 @@ public class SpopMainActivity extends AppCompatActivity
         presenter.setCurrentTrackUri(trackViewPager.getCurrentItem());
 
         //Set up transport fragment
+        TransportFragment transportFragment = new TransportFragment();
+        transportFragment.setOnNextTrackListener(this);
+
         fragmentManager
                 .beginTransaction()
-                .add(R.id.transport_container, new TransportFragment())
+                .add(R.id.transport_container, transportFragment)
                 .commit();
     }
 
@@ -194,5 +198,10 @@ public class SpopMainActivity extends AppCompatActivity
     @Override
     public void onPlaybackError(Error error) {
 
+    }
+
+    @Override
+    public void onNextTrack() {
+        trackViewPager.setCurrentItem(trackViewPager.getCurrentItem() + 1);
     }
 }

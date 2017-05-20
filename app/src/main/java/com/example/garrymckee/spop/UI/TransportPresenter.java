@@ -35,7 +35,7 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
     @Override
     public void getNextRecommendation() {
-        //
+
     }
 
     @Override

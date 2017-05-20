@@ -25,10 +25,8 @@ public interface SpopDisplayContract {
     }
 
     interface SpopDisplayable {
-
         void launchAuthenticator(AuthenticationRequest request);
         void onRecommendationsReady();
-
     }
 
     interface TransportPresenter {
@@ -42,5 +40,9 @@ public interface SpopDisplayContract {
     interface TransportDisplayable {
         void setPlaying();
         void setPaused();
+    }
+
+    interface OnNextTrackListener {
+        void onNextTrack();
     }
 }

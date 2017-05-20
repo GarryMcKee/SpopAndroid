@@ -20,6 +20,8 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
 
     private TransportPresenter presenter;
 
+    private SpopDisplayContract.OnNextTrackListener onNextTrackListener;
+
     private ImageButton nextRecommendationButton;
     private ImageButton playButton;
 
@@ -39,7 +41,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
         View view = inflater.inflate(R.layout.fragment_transport, container, false);
 
         nextRecommendationButton = (ImageButton) view.findViewById(R.id.next_recommendation_button);
-        nextRecommendationButton.setOnClickListener(v -> presenter.getNextRecommendation());
+        nextRecommendationButton.setOnClickListener(v -> onNextTrackListener.onNextTrack());
 
         playButton = (ImageButton) view.findViewById(R.id.play_pause_button);
         playButton.setOnClickListener(v -> {
@@ -59,5 +61,9 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
     @Override
     public void setPaused() {
         playButton.setImageResource(R.drawable.play_icon);
+    }
+
+    public void setOnNextTrackListener(SpopDisplayContract.OnNextTrackListener onNextTrackListener) {
+        this.onNextTrackListener = onNextTrackListener;
     }
 }
