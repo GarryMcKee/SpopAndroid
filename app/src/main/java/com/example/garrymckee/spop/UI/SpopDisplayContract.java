@@ -37,6 +37,8 @@ public interface SpopDisplayContract {
     interface TransportDisplayable {
         void setPlaying();
         void setPaused();
+        void setFavorited();
+        void setNotFavorited();
     }
 
     interface OnNextTrackListener {

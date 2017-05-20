@@ -73,6 +73,16 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
         playButton.setImageResource(R.drawable.play_icon);
     }
 
+    @Override
+    public void setFavorited() {
+        favoriteButton.setImageResource(R.drawable.ic_favorite_black_48dp);
+    }
+
+    @Override
+    public void setNotFavorited() {
+        favoriteButton.setImageResource(R.drawable.ic_favorite_border_black_48dp);
+    }
+
     public void setOnNextTrackListener(SpopDisplayContract.OnNextTrackListener onNextTrackListener) {
         this.onNextTrackListener = onNextTrackListener;
     }

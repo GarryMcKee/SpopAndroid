@@ -59,7 +59,7 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(LOG_TAG, "Success!");
-                transportDisplayable.
+                transportDisplayable.setFavorited();
             }
 
             @Override
