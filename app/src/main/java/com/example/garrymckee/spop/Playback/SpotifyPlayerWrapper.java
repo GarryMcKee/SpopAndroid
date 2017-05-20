@@ -71,7 +71,11 @@ public class SpotifyPlayerWrapper implements ConnectionStateCallback, Player.Ope
     }
 
     public boolean isPlaying() {
-        if(player.getPlaybackState().positionMs > 0) {
+        if(player == null) {
+            Log.d(LOG_TAG, "Player is not playing and has not been initialised");
+            return false;
+        }
+        if(player.getPlaybackState().isPlaying) {
             return true;
         } else {
             return false;

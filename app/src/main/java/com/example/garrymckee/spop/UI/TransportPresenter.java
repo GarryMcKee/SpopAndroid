@@ -25,6 +25,14 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
         playerWrapper = new SpotifyPlayerWrapper(ctx, this);
     }
 
+    public void syncTransportWithPlaybackState() {
+        if (playerWrapper.isPlaying()) {
+            transportDisplayable.setPlaying();
+        } else {
+            transportDisplayable.setPaused();
+        }
+    }
+
     @Override
     public void getNextRecommendation() {
         //

@@ -46,6 +46,8 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
             presenter.playTrackFromUri(CurrentTrack.getInstance().getCurrentTrackUri());
         });
 
+        presenter.syncTransportWithPlaybackState();
+
         return view;
     }
 
