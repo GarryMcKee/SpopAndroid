@@ -30,11 +30,8 @@ public interface SpopDisplayContract {
     }
 
     interface TransportPresenter {
-        void getNextRecommendation();
         void playTrackFromUri(String spotifyUri);
-        void pauseCurrentTrack();
-        void onPlay();
-        void onPause();
+        void onSaveTrack();
     }
 
     interface TransportDisplayable {

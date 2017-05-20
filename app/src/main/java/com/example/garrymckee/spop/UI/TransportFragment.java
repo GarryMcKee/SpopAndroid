@@ -22,6 +22,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
 
     private SpopDisplayContract.OnNextTrackListener onNextTrackListener;
 
+    private ImageButton favoriteButton;
     private ImageButton nextRecommendationButton;
     private ImageButton playButton;
 
@@ -40,6 +41,14 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transport, container, false);
 
+        favoriteButton = (ImageButton) view.findViewById(R.id.save_track_button);
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onSaveTrack();
+            }
+        });
+
         nextRecommendationButton = (ImageButton) view.findViewById(R.id.next_recommendation_button);
         nextRecommendationButton.setOnClickListener(v -> onNextTrackListener.onNextTrack());
 
@@ -47,6 +56,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
         playButton.setOnClickListener(v -> {
             presenter.playTrackFromUri(CurrentTrack.getInstance().getCurrentTrackUri());
         });
+
 
         presenter.syncTransportWithPlaybackState();
 

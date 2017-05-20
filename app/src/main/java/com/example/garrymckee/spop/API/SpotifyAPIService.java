@@ -1,5 +1,6 @@
 package com.example.garrymckee.spop.API;
 
+import com.example.garrymckee.spop.Model.Error;
 import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
@@ -7,9 +8,13 @@ import com.example.garrymckee.spop.Model.Track;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -34,6 +39,12 @@ public interface SpotifyAPIService {
             @Query("seed_tracks") String seedTracks,
             @Query("seed_genres") String seedGenres,
             @Query("limit") String limit
+    );
+
+    @PUT("me/tracks")
+    Call<ResponseBody> saveTrack(
+            @Header("Authorization") String authHeader,
+            @Query ("ids") String id
     );
 
 }
