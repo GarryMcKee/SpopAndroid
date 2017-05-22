@@ -35,7 +35,7 @@ public class SpopAuthenticator {
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(
                 CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private", "streaming", "user-top-read", "user-library-modify"});
+        builder.setScopes(new String[]{"user-read-private", "streaming", "user-top-read", "user-library-modify", "user-library-read"});
         AuthenticationRequest request = builder.build();
         return request;
     }

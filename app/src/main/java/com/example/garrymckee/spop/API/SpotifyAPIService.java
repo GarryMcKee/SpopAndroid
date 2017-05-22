@@ -5,6 +5,7 @@ import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
+import com.example.garrymckee.spop.Model.TrackSavedList;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -39,6 +40,12 @@ public interface SpotifyAPIService {
             @Query("seed_tracks") String seedTracks,
             @Query("seed_genres") String seedGenres,
             @Query("limit") String limit
+    );
+
+    @GET("me/tracks/contains")
+    Single<boolean[]> getSavedTracks (
+            @Header("Authorization") String authHeader,
+            @Query("ids") String seedArtists
     );
 
     @PUT("me/tracks")

@@ -11,6 +11,7 @@ public class TrackRecommendation {
     private String artistName;
     private String imageUrl;
     private String id;
+    private boolean isSaved;
 
     public TrackRecommendation(Track track, String imageUrl) {
         this.trackName = track.getName();
@@ -38,6 +39,14 @@ public class TrackRecommendation {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean isSaved) {
+        this.isSaved = isSaved;
     }
 
     @Override

@@ -6,12 +6,15 @@ import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.example.garrymckee.spop.Model.Artist;
 import com.example.garrymckee.spop.Model.Recommendation;
 import com.example.garrymckee.spop.Model.RecommendationInput;
+import com.example.garrymckee.spop.Model.SavedTracks;
 import com.example.garrymckee.spop.Model.TopArtists;
 import com.example.garrymckee.spop.Model.TopTracks;
 import com.example.garrymckee.spop.Model.Track;
 import com.example.garrymckee.spop.Model.TrackRecommendation;
+import com.example.garrymckee.spop.Model.TrackSavedList;
 import com.example.garrymckee.spop.UI.SpopDisplayContract;
 import com.example.garrymckee.spop.UI.SpopDisplayPresenter;
+import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import java.util.Set;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -28,21 +32,24 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class RecommendationManager {
-    private static final String RECOMMENDATIONS_POOL_LIMIT = "100";
+    private static final String RECOMMENDATIONS_POOL_LIMIT = "50";
 
     private final SpopDisplayContract.SpopDisplayPresentable presenter;
 
+    private SpotifyAPIService spotifyApiService;
+    private SpopAuthenticator spopAuthenticator;
+    private String authHeader;
+
     public RecommendationManager(SpopDisplayContract.SpopDisplayPresentable presenter) {
         this.presenter = presenter;
+        spotifyApiService = SpotifyApiUtils.getSpotifyApiServiceInstance();
+        spopAuthenticator = SpopAuthenticator.getInstance();
+        authHeader = "Bearer " + spopAuthenticator.getAuthToken();
     }
 
     public void generateRecommendations() {
         Single<TopTracks> topTracksCall;
         Single<TopArtists> topArtistsCall;
-
-        SpotifyAPIService spotifyApiService = SpotifyApiUtils.getSpotifyApiServiceInstance();
-        SpopAuthenticator spopAuthenticator = SpopAuthenticator.getInstance();
-        String authHeader = "Bearer " + spopAuthenticator.getAuthToken();
 
         topTracksCall = spotifyApiService.getTopTracks(authHeader);
         topArtistsCall = spotifyApiService.getTopArtists(authHeader);
@@ -72,6 +79,8 @@ public class RecommendationManager {
                         TrackRecommendation trackRecommendation = new TrackRecommendation(track, imageUrl);
                         trackRecommendations.add(index, trackRecommendation);
                     }
+
+                    trackRecommendations = checkSavedTracks(trackRecommendations);
                     RecommendationHolder.getInstance().setRecommendations(trackRecommendations);
                     presenter.onRecommendationsReady();
                 });
@@ -108,5 +117,24 @@ public class RecommendationManager {
         } else {
             return null;
         }
+    }
+
+    private List<TrackRecommendation> checkSavedTracks(List<TrackRecommendation> trackRecommendations) {
+        String queryIdList = "";
+        for(TrackRecommendation track : trackRecommendations) {
+            queryIdList += track.getId() + ",";
+        }
+
+        Single<boolean[]> trackSavedListCall = spotifyApiService.getSavedTracks(authHeader, queryIdList);
+        trackSavedListCall
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(trackSavedList -> {
+                    for (int i = 0; i < trackSavedList.length; i++) {
+                        trackRecommendations.get(i).setSaved(trackSavedList[i]);
+                    }
+                });
+
+        return trackRecommendations;
     }
 }
