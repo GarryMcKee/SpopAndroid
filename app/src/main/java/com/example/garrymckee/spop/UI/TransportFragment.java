@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.garrymckee.spop.Model.Image;
 import com.example.garrymckee.spop.Playback.CurrentTrack;
 import com.example.garrymckee.spop.R;
 
@@ -58,7 +57,7 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
         });
 
 
-        presenter.syncTransportWithPlaybackState();
+        presenter.UpdateTransportUi();
 
         return view;
     }

@@ -29,8 +29,6 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
     private static final String LOG_TAG = TransportPresenter.class.getSimpleName();
 
-    private static final String SPOTIFY_URI_PREFIX = "spotify:track:";
-
     private SpotifyPlayerWrapper playerWrapper;
     private SpopDisplayContract.TransportDisplayable transportDisplayable;
 
@@ -39,27 +37,61 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
         playerWrapper = new SpotifyPlayerWrapper(ctx, this);
     }
 
-    public void syncTransportWithPlaybackState() {
+    public void UpdateTransportUi() {
         if (playerWrapper.isPlaying()) {
             transportDisplayable.setPlaying();
         } else {
             transportDisplayable.setPaused();
         }
+
+        if(CurrentTrack.getInstance().isCurrentTrackSaved()) {
+            transportDisplayable.setFavorited();
+        } else {
+            transportDisplayable.setNotFavorited();
+        }
+
     }
 
     @Override
     public void onSaveTrack() {
         String trackUri = CurrentTrack.getInstance().getCurrentTrackUri();
-        Log.d(LOG_TAG, trackUri);
         SpotifyAPIService spotifyApiService = SpotifyApiUtils.getSpotifyApiServiceInstance();
+
         SpopAuthenticator spopAuthenticator = SpopAuthenticator.getInstance();
         String authHeader = "Bearer " + spopAuthenticator.getAuthToken();
-        Log.d(LOG_TAG, authHeader);
+
+        if(CurrentTrack.getInstance().isCurrentTrackSaved()) {
+            unSaveCurrentTrack(trackUri, spotifyApiService, authHeader);
+        } else {
+            saveCurrentTrack(trackUri, spotifyApiService, authHeader);
+        }
+
+
+    }
+
+    private void saveCurrentTrack(String trackUri, SpotifyAPIService spotifyApiService, String authHeader) {
         spotifyApiService.saveTrack(authHeader, trackUri).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(LOG_TAG, "Success!");
                 transportDisplayable.setFavorited();
+                CurrentTrack.getInstance().setCurrentTrackSaved(true);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(LOG_TAG, "Failure: " + t.getMessage());
+            }
+        });
+    }
+
+    private void unSaveCurrentTrack(String trackUri, SpotifyAPIService spotifyApiService, String authHeader) {
+        spotifyApiService.deleteTrack(authHeader, trackUri).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(LOG_TAG, "Success!");
+                transportDisplayable.setNotFavorited();
+                CurrentTrack.getInstance().setCurrentTrackSaved(false);
             }
 
             @Override

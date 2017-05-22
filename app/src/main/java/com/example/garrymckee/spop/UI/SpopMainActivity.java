@@ -128,16 +128,16 @@ public class SpopMainActivity extends AppCompatActivity
             public void onPageSelected(int position) {
                 //TODO This entire function is a bit hacky
                 presenter.setCurrentTrackUri(position);
-
+                TransportPresenter transportPresenter = ((TransportFragment)getSupportFragmentManager().findFragmentById(R.id.transport_container)).getPresenter();
                 //This should only really be called on rotation changes, don't replay the song if onPageSelected was called without acctually changing the track
                 if(position != lastViewPagerPosition) {
-                    ((TransportFragment)getSupportFragmentManager().findFragmentById(R.id.transport_container))
-                            .getPresenter()
+                    transportPresenter
                             .playTrackFromUri(RecommendationHolder.getInstance().getRecommendations().get(position).getId());
                 } else {
                     Log.d(LOG_TAG, "Called on Page Selected without changing selected item");
                 }
 
+                transportPresenter.UpdateTransportUi();
                 lastViewPagerPosition = position;
 
             }

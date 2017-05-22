@@ -51,6 +51,6 @@ public class TrackRecommendation {
 
     @Override
     public String toString() {
-        return this.trackName;
+        return this.trackName + " is Saved: " + isSaved;
     }
 }

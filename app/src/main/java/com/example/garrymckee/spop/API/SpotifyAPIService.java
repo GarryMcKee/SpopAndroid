@@ -13,6 +13,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PUT;
@@ -53,5 +54,11 @@ public interface SpotifyAPIService {
             @Header("Authorization") String authHeader,
             @Query ("ids") String id
     );
+    @DELETE("me/tracks")
+    Call<ResponseBody> deleteTrack(
+            @Header("Authorization") String authHeader,
+            @Query ("ids") String id
+    );
+
 
 }

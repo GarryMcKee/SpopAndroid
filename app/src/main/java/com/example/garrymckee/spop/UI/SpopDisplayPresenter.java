@@ -1,11 +1,8 @@
 package com.example.garrymckee.spop.UI;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
+import com.example.garrymckee.spop.Model.TrackRecommendation;
 import com.example.garrymckee.spop.Playback.CurrentTrack;
-import com.example.garrymckee.spop.Playback.SpotifyPlayerWrapper;
 import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
 import com.example.garrymckee.spop.Recommendation.RecommendationManager;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -51,15 +48,14 @@ public class SpopDisplayPresenter implements SpopDisplayPresentable {
 
     @Override
     public void setCurrentTrackUri(int trackPosition) {
-        String currentTrackUri = RecommendationHolder
+        TrackRecommendation currentTrack = RecommendationHolder
                 .getInstance()
                 .getRecommendations()
-                .get(trackPosition)
-                .getId();
+                .get(trackPosition);
 
         CurrentTrack
                 .getInstance()
-                .setCurrentTrackUri(currentTrackUri);
+                .setCurrentTrackRecommendation(currentTrack);
     }
 
     @Override

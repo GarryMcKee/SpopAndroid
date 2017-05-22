@@ -1,5 +1,7 @@
 package com.example.garrymckee.spop.Recommendation;
 
+import android.util.Log;
+
 import com.example.garrymckee.spop.API.SpotifyAPIService;
 import com.example.garrymckee.spop.API.SpotifyApiUtils;
 import com.example.garrymckee.spop.Authentication.SpopAuthenticator;
@@ -132,6 +134,7 @@ public class RecommendationManager {
                 .subscribe(trackSavedList -> {
                     for (int i = 0; i < trackSavedList.length; i++) {
                         trackRecommendations.get(i).setSaved(trackSavedList[i]);
+                        Log.d("CHECKSAVED", trackRecommendations.get(i).toString());
                     }
                 });
 

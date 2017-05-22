@@ -1,5 +1,8 @@
 package com.example.garrymckee.spop.Playback;
 
+import com.example.garrymckee.spop.Model.TrackRecommendation;
+import com.example.garrymckee.spop.Recommendation.RecommendationHolder;
+
 /**
  * Created by Garry on 12/05/2017.
  */
@@ -10,7 +13,7 @@ public class CurrentTrack {
     Represents the currently selected track (i.e. the track the user is currently looking at)
      */
 
-    private String currentTrackUri;
+    private TrackRecommendation currentTrackRecommendation;
     private static CurrentTrack instance;
 
     public static CurrentTrack getInstance() {
@@ -26,11 +29,20 @@ public class CurrentTrack {
         //Private constructor
     }
 
-    public void setCurrentTrackUri(String trackUri) {
-        this.currentTrackUri = trackUri;
+    public void setCurrentTrackRecommendation(TrackRecommendation currentTrackRecommendation) {
+        this.currentTrackRecommendation = currentTrackRecommendation;
     }
 
     public String getCurrentTrackUri() {
-        return this.currentTrackUri;
+        return currentTrackRecommendation.getId();
+    }
+
+    public boolean isCurrentTrackSaved() {
+        return currentTrackRecommendation.isSaved();
+    }
+
+    public void setCurrentTrackSaved(boolean isSaved) {
+        int index = RecommendationHolder.getInstance().getRecommendations().indexOf(currentTrackRecommendation);
+        RecommendationHolder.getInstance().getRecommendations().get(index).setSaved(isSaved);
     }
 }
