@@ -17,7 +17,9 @@ import com.mellobit.garrymckee.spop.UI.SpopDisplayContract;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,20 +86,33 @@ public class RecommendationManager {
     }
 
     private RecommendationInput createRecommendationInput(List<Artist> artists, List<Track> tracks) {
+        ArrayList<Integer> randomArtistIndices = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < 3; i++) {
+            int index = random.nextInt(artists.size());
+
+            while(randomArtistIndices.contains(index)) {
+                index = random.nextInt(artists.size());
+            }
+
+            randomArtistIndices.add(index);
+            Log.d("CHECK INDICES", "Index : " + index);
+        }
+
         //Get a list of top 3 artists (need ID for api call)
         StringBuilder sb = new StringBuilder("");
-        sb.append(artists.get(0).getId() + ',');
-        sb.append(artists.get(1).getId() + ',');
-        sb.append(artists.get(2).getId());
+        sb.append(artists.get(randomArtistIndices.get(0)).getId() + ',');
+        sb.append(artists.get(randomArtistIndices.get(1)).getId() + ',');
+        sb.append(artists.get(randomArtistIndices.get(2)).getId());
         String artistInput = sb.toString();
 
         //Get the users top track (need ID for api call)
-        String trackInput = tracks.get(0).getId();
+        String trackInput = tracks.get(random.nextInt(tracks.size())).getId();
 
         //Get a list of top genres
         Set<String> genreSet = getGenresFromArtists(artists);
         String[] genres = genreSet.toArray(new String[genreSet.size()]);
-        String genreInput = genres[0];
+        String genreInput = genres[random.nextInt(genres.length)];
 
         return new RecommendationInput(artistInput, trackInput, genreInput);
     }

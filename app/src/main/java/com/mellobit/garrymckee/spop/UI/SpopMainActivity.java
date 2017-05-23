@@ -79,7 +79,6 @@ public class SpopMainActivity extends AppCompatActivity
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, data);
 
-
             //Initialise player and fetch recommendations
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
                 presenter.storeAuthToken(response.getAccessToken());

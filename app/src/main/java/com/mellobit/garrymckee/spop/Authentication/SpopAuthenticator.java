@@ -20,7 +20,6 @@ public class SpopAuthenticator {
     private String authToken;
 
     private SpopAuthenticator() {
-        Log.d(LOG_TAG, "Created instance of class");
     }
 
     public static SpopAuthenticator getInstance() {
