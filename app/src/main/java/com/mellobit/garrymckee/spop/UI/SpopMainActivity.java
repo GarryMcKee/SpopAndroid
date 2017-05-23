@@ -48,7 +48,11 @@ public class SpopMainActivity extends AppCompatActivity
         }
         presenter = new SpopDisplayPresenter(this);
         //TODO initialise Fresco in an Application class
-        Fresco.initialize(this);
+
+        if(!Fresco.hasBeenInitialized()) {
+            Fresco.initialize(this);
+        }
+
         setContentView(R.layout.activity_spop_main);
 
         if(SpopAuthenticator.getInstance().getAuthToken() == null) {

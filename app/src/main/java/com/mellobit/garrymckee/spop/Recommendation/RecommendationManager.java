@@ -94,9 +94,7 @@ public class RecommendationManager {
             while(randomArtistIndices.contains(index)) {
                 index = random.nextInt(artists.size());
             }
-
             randomArtistIndices.add(index);
-            Log.d("CHECK INDICES", "Index : " + index);
         }
 
         //Get a list of top 3 artists (need ID for api call)
@@ -144,7 +142,6 @@ public class RecommendationManager {
                 .subscribe(trackSavedList -> {
                     for (int i = 0; i < trackSavedList.length; i++) {
                         trackRecommendations.get(i).setSaved(trackSavedList[i]);
-                        Log.d("CHECKSAVED", trackRecommendations.get(i).toString());
                     }
                 });
 
