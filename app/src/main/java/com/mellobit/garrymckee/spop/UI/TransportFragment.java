@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.mellobit.garrymckee.spop.Playback.CurrentTrack;
 import com.mellobit.garrymckee.spop.R;
@@ -16,6 +17,10 @@ import com.mellobit.garrymckee.spop.R;
  */
 
 public class TransportFragment extends Fragment implements SpopDisplayContract.TransportDisplayable{
+
+    public static final int SAVE_TRACK_ERROR = 0000;
+    public static final int REMOVE_TRACK_ERROR = 0001;
+    public static final int PLAY_TRACK_ERROR = 0002;
 
     private TransportPresenter presenter;
 
@@ -82,7 +87,32 @@ public class TransportFragment extends Fragment implements SpopDisplayContract.T
         favoriteButton.setImageResource(R.drawable.ic_favorite_border_black_48dp);
     }
 
+    @Override
+    public void showErrorMessage(int errorType) {
+        switch (errorType) {
+            case SAVE_TRACK_ERROR:
+                Toast.makeText(getActivity(), getString(R.string.save_track_error), Toast.LENGTH_SHORT).show();
+                break;
+            case REMOVE_TRACK_ERROR:
+                Toast.makeText(getActivity(), getString(R.string.remove_track_error), Toast.LENGTH_SHORT).show();
+                break;
+            case PLAY_TRACK_ERROR:
+                Toast.makeText(getActivity(), getString(R.string.play_track_error), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(getActivity(), getString(R.string.play_track_error), Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
     public void setOnNextTrackListener(SpopDisplayContract.OnNextTrackListener onNextTrackListener) {
         this.onNextTrackListener = onNextTrackListener;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribePresenter();
     }
 }

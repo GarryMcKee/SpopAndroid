@@ -9,4 +9,9 @@
 
     <string name="title_activity_spotify_authenticate">SpotifyAuthenticateActivity</string>
     <string name="title_activity_spop">SpopActivity</string>
+
+    <string name="save_track_error">Could not save track, please check your connection and try again.</string>
+    <string name="remove_track_error">Could not remove track, please check your connection and try again.</string>
+    <string name="play_track_error">Could not play track, please check your connection and try again.</string>
+    <string name="unknown_error">Something went wrong, please check your connection and try restarting the app.</string>
 </resources>

@@ -25,6 +25,7 @@ public interface SpopDisplayContract {
     interface TransportPresenter {
         void playTrackFromUri(String spotifyUri);
         void onSaveTrack();
+        void unSubscribePresenter();
     }
 
     interface TransportDisplayable {
@@ -32,6 +33,7 @@ public interface SpopDisplayContract {
         void setPaused();
         void setFavorited();
         void setNotFavorited();
+        void showErrorMessage(int errorType);
     }
 
     interface OnNextTrackListener {

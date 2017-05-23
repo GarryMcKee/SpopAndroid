@@ -1,6 +1,7 @@
 package com.mellobit.garrymckee.spop.UI;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.mellobit.garrymckee.spop.API.SpotifyAPIService;
@@ -8,6 +9,7 @@ import com.mellobit.garrymckee.spop.API.SpotifyApiUtils;
 import com.mellobit.garrymckee.spop.Authentication.SpopAuthenticator;
 import com.mellobit.garrymckee.spop.Playback.CurrentTrack;
 import com.mellobit.garrymckee.spop.Playback.SpotifyPlayerWrapper;
+import com.mellobit.garrymckee.spop.R;
 import com.spotify.sdk.android.player.Error;
 import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerEvent;
@@ -76,6 +78,7 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                transportDisplayable.showErrorMessage(TransportFragment.SAVE_TRACK_ERROR);
                 Log.d(LOG_TAG, "Failure: " + t.getMessage());
             }
         });
@@ -92,6 +95,7 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                transportDisplayable.showErrorMessage(TransportFragment.REMOVE_TRACK_ERROR);
                 Log.d(LOG_TAG, "Failure: " + t.getMessage());
             }
         });
@@ -113,6 +117,12 @@ public class TransportPresenter implements SpopDisplayContract.TransportPresente
 
     @Override
     public void onPlaybackError(Error error) {
+        transportDisplayable.showErrorMessage(TransportFragment.PLAY_TRACK_ERROR);
         Log.e(LOG_TAG, error.toString());
+    }
+
+    @Override
+    public void unSubscribePresenter() {
+        playerWrapper.unSubscribePlayerEventListener();
     }
 }

@@ -22,10 +22,11 @@ public class SpotifyPlayerWrapper implements ConnectionStateCallback, Player.Ope
     private static final String CLIENT_ID = "3c111ba9afb74477a09347b0b62da582";
     private static final String SPOTIFY_URI_PREFIX = "spotify:track:";
 
-    private static SpotifyPlayer player;
+    private SpotifyPlayer player;
+    private Player.NotificationCallback playerEventListener;
 
     public SpotifyPlayerWrapper(Context ctx, Player.NotificationCallback playerEventListener) {
-
+        this.playerEventListener = playerEventListener;
         //Instantiate the player
         Config playerConfig = new Config(ctx, SpopAuthenticator.getInstance().getAuthToken(), CLIENT_ID);
         Spotify.getPlayer(playerConfig, this, new com.spotify.sdk.android.player.SpotifyPlayer.InitializationObserver() {
@@ -109,11 +110,16 @@ public class SpotifyPlayerWrapper implements ConnectionStateCallback, Player.Ope
 
     @Override
     public void onSuccess() {
-        Log.d(LOG_TAG, "Playback sucess!");
     }
 
     @Override
     public void onError(Error error) {
 
+    }
+
+    public void unSubscribePlayerEventListener() {
+        if(playerEventListener != null) {
+            player.removeNotificationCallback(playerEventListener);
+        }
     }
 }
