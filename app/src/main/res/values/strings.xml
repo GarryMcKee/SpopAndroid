@@ -1,17 +1,13 @@
 <resources>
     <string name="app_name">Spop</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
-    <string name="generate_user_profile_button">Generate User Taste Profile</string>
-    <string name="print_user_taste_button_text">Print User Taste Profile</string>
-
-    <string name="title_activity_spotify_authenticate">SpotifyAuthenticateActivity</string>
-    <string name="title_activity_spop">SpopActivity</string>
-
+    <!-- Error Messages -->
     <string name="save_track_error">Could not save track, please check your connection and try again.</string>
     <string name="remove_track_error">Could not remove track, please check your connection and try again.</string>
     <string name="play_track_error">Could not play track, please check your connection and try again.</string>
-    <string name="unknown_error">Something went wrong, please check your connection and try restarting the app.</string>
+
+    <!-- Accessibility Strings -->
+    <string name="favourite_button_content_description">Favourite Button</string>
+    <string name="play_button_content_description">Play Button</string>
+    <string name="next_button_content_description">Next Button</string>
 </resources>
