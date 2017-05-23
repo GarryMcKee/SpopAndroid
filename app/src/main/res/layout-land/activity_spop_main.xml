@@ -14,7 +14,7 @@
         android:id="@+id/trackview_viewpager"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/transport_container">
+        android:layout_toStartOf="@+id/transport_container">
     </android.support.v4.view.ViewPager>
 </RelativeLayout>
 
