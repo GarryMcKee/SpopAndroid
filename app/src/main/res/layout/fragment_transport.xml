@@ -3,8 +3,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/background_default"
-    android:padding="@dimen/action_bar_padding">
+              android:padding="@dimen/action_bar_padding">
 
     <ImageButton
         android:id="@+id/save_track_button"
